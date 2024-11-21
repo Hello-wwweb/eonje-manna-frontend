@@ -1,0 +1,29 @@
+.arrow-button {
+    position: absolute;
+    top: 50%; /* 부모 요소 기준으로 중앙 */
+    transform: translateY(-50%);
+    z-index: 10; /* 콘텐츠 위로 표시 */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
+}
+
+.arrow-button:hover {
+background-color: #f0f0f0;
+}
+
+.arrow-button.left {
+left: 10px; /* 왼쪽 버튼 */
+}
+
+.arrow-button.right {
+right: 10px; /* 오른쪽 버튼 */
+}

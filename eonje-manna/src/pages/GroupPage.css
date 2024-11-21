@@ -10,19 +10,24 @@
   }
   
   .scroll-container {
+    position: relative; /* 버튼 위치 기준 */
     display: flex;
-    align-items: center;
-    position: relative;
+    align-items: center; /* 수직 정렬 */
   }
   
   .group-list-container {
-    overflow-x: auto; /* 가로 스크롤 활성화 */
-    white-space: nowrap;
     display: flex;
-    padding: 10px 0;
-    flex: 1; /* 버튼 사이의 가로 공간을 차지하도록 설정 */
-    scroll-behavior: smooth; /* 부드러운 스크롤 */
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE 및 Edge */
+    scrollbar-width: none; /* Firefox */
+    padding: 0 50px;
   }
+
+
+.group-list-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
   
   .group-list {
     display: flex;
@@ -36,6 +41,7 @@
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+    flex-shrink: 0;
   }
   
   .group-card:hover {
@@ -59,10 +65,10 @@
   }
   
   .scroll-button.left {
-    left: -20px;
+    left: 10px;
   }
   
   .scroll-button.right {
-    right: -20px;
+    right: 10px;
   }
   

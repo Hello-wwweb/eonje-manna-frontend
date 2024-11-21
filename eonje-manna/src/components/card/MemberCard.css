@@ -1,0 +1,23 @@
+.member-card {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.member-card .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.member-card .card-text {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}

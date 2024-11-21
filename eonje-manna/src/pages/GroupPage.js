@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Card, Modal, Form } from 'react-bootstrap';
 import './GroupPage.css';
+import { BsCaretLeftFill } from "react-icons/bs";
+import { BsCaretRightFill } from "react-icons/bs";
+import { BsChevronRight } from "react-icons/bs";
 
 function GroupPage() {
   const [groups, setGroups] = useState([
-    { id: 1, name: 'Study Group', description: 'A group for study enthusiasts' },
-    { id: 2, name: 'Music Lovers', description: 'Share and enjoy music together' },
-    { id: 3, name: 'Book Club', description: 'Discuss and share book reviews' },
-    { id: 4, name: 'Tech Innovators', description: 'Explore technology trends' },
-    { id: 5, name: 'Fitness Buddies', description: 'Stay fit and motivated together' },
+    { id: 1, name: 'Study Group', description: 'A group for study enthusiasts', members: ['Alice', 'Bob', 'Charlie'] },
+    { id: 2, name: 'Music Lovers', description: 'Share and enjoy music together', members: ['David', 'Eve'] },
+    { id: 3, name: 'Book Club', description: 'Discuss and share book reviews', members: ['Frank', 'Grace'] },
+    { id: 4, name: 'Tech Innovators', description: 'Explore technology trends', members: ['Heidi', 'Ivan', 'Judy'] },
+    { id: 5, name: 'Fitness Buddies', description: 'Stay fit and motivated together', members: ['Karl', 'Laura'] },
   ]);
   const [showModal, setShowModal] = useState(false);
   const [newGroup, setNewGroup] = useState({ name: '', description: '' });
+  const navigate = useNavigate();
 
   const handleAddGroup = () => {
     setGroups([...groups, { id: groups.length + 1, ...newGroup }]);
@@ -29,7 +34,7 @@ function GroupPage() {
   return (
     <div className="group-page-container">
       <div className="header">
-        <h1>Your Groups</h1>
+        <h1>Groups</h1>
         <Button variant="primary" onClick={() => setShowModal(true)}>
           + Add Group
         </Button>
@@ -42,18 +47,23 @@ function GroupPage() {
           className="scroll-button left"
           onClick={() => scrollList('left')}
         >
-          ◀
+          <BsCaretLeftFill />
         </Button>
         <div className="group-list-container">
           <div className="group-list">
             {groups.map((group) => (
               <Card key={group.id} className="group-card">
-                <Card.Body>
-                  <Card.Title>{group.name}</Card.Title>
-                  <Card.Text>{group.description}</Card.Text>
-                  <Button variant="outline-primary">View Details</Button>
-                </Card.Body>
-              </Card>
+              <Card.Body>
+                <Card.Title>{group.name}</Card.Title>
+                <Card.Text>{group.description}</Card.Text>
+                <Card.Text>
+                  <strong>Members:</strong> {group.members.join(', ')}
+                </Card.Text>
+                <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
+                View Details
+              </Button>
+              </Card.Body>
+            </Card>
             ))}
           </div>
         </div>
@@ -62,7 +72,7 @@ function GroupPage() {
           className="scroll-button right"
           onClick={() => scrollList('right')}
         >
-          ▶
+          <BsCaretRightFill />
         </Button>
       </div>
 

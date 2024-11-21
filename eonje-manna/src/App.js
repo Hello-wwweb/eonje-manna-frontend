@@ -7,6 +7,7 @@ import StackedTab from './components/sidebar/StackedTab';
 import NavScrollExample from './components/sidebar/TobBar';
 
 import GroupPage from './pages/GroupPage';
+import GroupDetailPage from './pages/GroupDetailPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/home" element={<div>Home Page</div>} />
             <Route path="/groups" element={<GroupPage />} />
+            <Route path="/groups/:id" element={<GroupDetailPage />} />
             <Route path="/link-2" element={<div>Link 2 Page</div>} />
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>

@@ -1,0 +1,22 @@
+.scroll-container {
+position: relative;
+display: flex;
+align-items: center;
+}
+
+.scroll-content {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 10px;
+    max-width: 100%;
+}
+
+.scroll-content > * {
+flex-shrink: 0; /* 카드가 줄어들지 않도록 설정 */
+width: 300px; /* 각 카드의 고정 너비 */
+}
+.scroll-content::-webkit-scrollbar {
+display: none;
+}

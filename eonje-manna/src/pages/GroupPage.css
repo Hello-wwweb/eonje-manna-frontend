@@ -1,0 +1,68 @@
+.group-page-container {
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .scroll-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .group-list-container {
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    white-space: nowrap;
+    display: flex;
+    padding: 10px 0;
+    flex: 1; /* 버튼 사이의 가로 공간을 차지하도록 설정 */
+    scroll-behavior: smooth; /* 부드러운 스크롤 */
+  }
+  
+  .group-list {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .group-card {
+    flex: 0 0 auto;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .group-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .scroll-button.left {
+    left: -20px;
+  }
+  
+  .scroll-button.right {
+    right: -20px;
+  }
+  

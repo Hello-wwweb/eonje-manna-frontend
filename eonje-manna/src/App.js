@@ -1,23 +1,37 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import StackedTab from './components/sidebar/StackedTab';
+import NavScrollExample from './components/sidebar/TobBar';
+
+import GroupPage from './pages/GroupPage';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        {/* 네비게이션 바 */}
+        <div className="navBar">
+          <NavScrollExample />
+        </div>
+
+        {/* 사이드바 */}
+        <div className="sidebar">
+          <StackedTab />
+        </div>
+
+        {/* 메인 콘텐츠 */}
+        <div className="main-content">
+          <Routes>
+            <Route path="/home" element={<div>Home Page</div>} />
+            <Route path="/groups" element={<GroupPage />} />
+            <Route path="/link-2" element={<div>Link 2 Page</div>} />
+            <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }

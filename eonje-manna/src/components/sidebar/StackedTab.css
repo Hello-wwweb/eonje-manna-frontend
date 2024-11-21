@@ -1,0 +1,23 @@
+.flex-column {
+  align-items: flex-start; /* 좌측 정렬 */
+}
+
+.nav-link {
+  text-align: left; /* 텍스트 좌측 정렬 */
+  color: #555555; /* 기본 회색 글씨 */
+  padding: 10px 15px; /* 간격 추가 */
+  margin-bottom: 10px;
+  border-radius: 5px; /* 선택 시 둥근 모서리 */
+  transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.nav-link:hover {
+  color: #0056b3; /* 호버 시 약간 더 진한 회색-파랑 */
+}
+
+.nav-link.active {
+  font-weight: bold; /* 선택된 항목은 굵은 글씨 */
+  background-color: #007bff; /* 선택된 항목 배경색: 파란색 */
+  color: white !important; /* 선택된 항목 글씨: 흰색 */
+  border-radius: 5px;
+}

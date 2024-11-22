@@ -19,23 +19,32 @@ import {
     isSunday,
 } from "date-fns";
 
+// 시간 선택하는 모달 띄우는 거
+import TimeSelectionModal from "./TimeSelectionModal";
+
 function EventDetailPage(){
     const { event_id } = useParams();
     const now_date = new Date()
     {/* 캘린더 만들기 */}
+    //오늘 날짜 관련 상태
     const [currentDate, setCurrentDate] = useState(new Date());
-     const monthStart = startOfMonth(currentDate);
-     const monthEnd = endOfMonth(currentDate);
-     const startDate = startOfWeek(monthStart);
-     const endDate = endOfWeek(monthEnd);
-     const weekMock = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-     const nextMonthHandler = useCallback(()=>{
+
+    //선택한 날짜 및 모달 열림 상태
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const monthStart = startOfMonth(currentDate);
+    const monthEnd = endOfMonth(currentDate);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
+    const weekMock = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    const nextMonthHandler = useCallback(()=>{
         setCurrentDate(addMonths(currentDate, 1));
-     }, [currentDate]);
-     const preMonthHandler = useCallback(()=>{
+    }, [currentDate]);
+    const preMonthHandler = useCallback(()=>{
         setCurrentDate(subMonths(currentDate, 1));
-     }, [currentDate]);
-     const createMonth = useMemo(()=>{
+    }, [currentDate]);
+    const createMonth = useMemo(()=>{
         const monthArray = [];
         let day = startDate;
         while(differenceInCalendarDays(endDate, day)>=0){
@@ -43,10 +52,20 @@ function EventDetailPage(){
             day = addDays(day, 1);
         }
         return monthArray;
-     },[startDate, endDate]);
+    },[startDate, endDate]);
 
+    //날짜가 클릭됐을 때 모달 열기
+    const onDateClick = (date) => {
+        setSelectedDate(date);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = ()=> {
+        setSelectedDate(null);
+        setIsModalOpen(false);
+    };
     return (
-        <div >
+        <div className="container">
             <div className='calendarWrapper'>
                 <div className="calendar">
                     {/*년*/}
@@ -109,7 +128,7 @@ function EventDetailPage(){
                                 <div key={`date${i}`}
                                 //validation이 true이면 className을 currentMonth, 아니면 diffMonth
                                 className={validation ? "currentMonth" : "diffMonth"}
-                                //validation ? currentMonth : diffMonth
+                                onClick={()=>onDateClick(v)}
                                 style={style}>
                                     <div className="topLine">
                                         <span className='day'>
@@ -123,10 +142,16 @@ function EventDetailPage(){
                     </div>
                 </div>
             </div>
-            
-            <div>
-
+            <div className="selectedDates">
+                <h1>Selected Dates</h1>
+                <p>{selectedDate ? format(selectedDate, "yyyy-MM-dd") : "No date selected"}</p>
             </div>
+            {isModalOpen && (
+                <TimeSelectionModal
+                    date={selectedDate}
+                    onClose={closeModal}
+                />
+            )}
         </div>
     );
 }

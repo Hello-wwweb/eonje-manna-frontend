@@ -4,38 +4,88 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+/* TimeBars.css */
 .modalContent {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 400px;
+    width: 900px;
     text-align: center;
 }
-
-.timeOptions {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.timeOption {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 18px;
+    margin: 20px 0 10px;
+  }
+  
+  .time-bar {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .time-bar-name {
+    width: 100%;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .my-time-bar .time-segment-bar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
-}
+  }
+  .time-segment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .time-segment-bar {
+    width: 20px;
+    height: 50px;
+    background-color: lightgray;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .time-segment-bar.available {
+    background-color: #3333c8; /* Available time color */
+  }
+  
+  .time-segment-label {
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .time-segment.selected .time-segment-bar {
+    background-color: #7d33c8; /* Selected time color */
+  }
+  
 
-.timeOption.selected {
-    background: #007bff;
-    color: white;
-}
+  .time-segment.readOnly .time-segment-bar {
+    background-color: #dcdcdc; /* 읽기 전용일 경우 배경색 */
+  }
+  
+  .time-segment-label.readOnly {
+    color: #888; /* 읽기 전용일 경우 텍스트 색상 */
+  }
+
+  .result-time-bar .time-segment-bar.available {
+    background-color: rgb(99, 189, 87); /* Available time color */
+  }
 
 .btnContainer{
     display: flex;

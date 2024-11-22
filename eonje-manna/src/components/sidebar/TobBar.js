@@ -16,10 +16,11 @@ function NavScrollExample() {
         
         {/* 모바일 토글 */}
         <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          
+        <Navbar.Collapse id="navbarScroll" class="ms-auto d-none d-lg-block">
+            
           {/* 검색창 */}
-          <Form className="d-flex mx-auto" style={{ width: '50%' }}>
+          {/** 
+           *  <Form className="d-flex mx-auto" style={{ width: '50%' }}>
             <Form.Control
               type="search"
               placeholder="Search"
@@ -28,7 +29,10 @@ function NavScrollExample() {
             />
             <Button variant="outline-success">Search</Button>
           </Form>
+        
+          */}
 
+          
           {/* 프로필 드롭다운 */}
           <Nav>
             <NavDropdown

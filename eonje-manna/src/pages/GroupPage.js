@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, Modal, Form } from 'react-bootstrap';
 import './GroupPage.css';
@@ -6,29 +6,78 @@ import { BsCaretLeftFill } from "react-icons/bs";
 import { BsCaretRightFill } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
 
+import ScrollContainer from '../components/container/ScrollContainer';
+
 function GroupPage() {
-  const [groups, setGroups] = useState([
-    { id: 1, name: 'Study Group', description: 'A group for study enthusiasts', members: ['Alice', 'Bob', 'Charlie'] },
-    { id: 2, name: 'Music Lovers', description: 'Share and enjoy music together', members: ['David', 'Eve'] },
-    { id: 3, name: 'Book Club', description: 'Discuss and share book reviews', members: ['Frank', 'Grace'] },
-    { id: 4, name: 'Tech Innovators', description: 'Explore technology trends', members: ['Heidi', 'Ivan', 'Judy'] },
-    { id: 5, name: 'Fitness Buddies', description: 'Stay fit and motivated together', members: ['Karl', 'Laura'] },
-  ]);
+  const [groups, setGroups] = useState([]);
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
   const [showModal, setShowModal] = useState(false);
   const [newGroup, setNewGroup] = useState({ name: '', description: '' });
+  const [addError, setAddError] = useState(null);
   const navigate = useNavigate();
 
-  const handleAddGroup = () => {
-    setGroups([...groups, { id: groups.length + 1, ...newGroup }]);
-    setNewGroup({ name: '', description: '' });
-    setShowModal(false);
+  const fetchGroups = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/groups/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch groups');
+      }
+
+      const data = await response.json();
+      setGroups(data); 
+    } catch (err) {
+      console.error('Error fetching groups:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false); // 로딩 상태 해제
+    }
   };
 
-  const scrollList = (direction) => {
-    const container = document.querySelector('.group-list-container');
-    const scrollAmount = 300; // 한 번에 스크롤할 거리
-    if (direction === 'left') container.scrollLeft -= scrollAmount;
-    if (direction === 'right') container.scrollLeft += scrollAmount;
+  const addGroup = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/groups/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newGroup.name,
+          description: newGroup.description,
+        }),
+        credentials: 'include', 
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add group');
+      }
+
+      const createdGroup = await response.json();
+      setGroups([...groups, createdGroup]); // 새로 추가된 그룹을 목록에 반영
+      setNewGroup({ name: '', description: '' });
+      setShowModal(false);
+      setAddError(null);
+    } catch (err) {
+      console.error('Error adding group:', err);
+      setAddError('Failed to add group. Please try again.');
+    }
+  };
+
+  // 컴포넌트가 렌더링될 때 데이터 가져오기
+  useEffect(() => {
+    fetchGroups();
+  }, []);
+
+
+  const handleAddGroup = (e) => {
+    e.preventDefault();
+    addGroup();
   };
 
   return (
@@ -41,40 +90,22 @@ function GroupPage() {
       </div>
 
       {/* 화살표와 리스트 컨테이너 */}
-      <div className="scroll-container">
-        <Button
-          variant="outline-secondary"
-          className="scroll-button left"
-          onClick={() => scrollList('left')}
-        >
-          <BsCaretLeftFill />
-        </Button>
-        <div className="group-list-container">
-          <div className="group-list">
-            {groups.map((group) => (
-              <Card key={group.id} className="group-card">
-              <Card.Body>
-                <Card.Title>{group.name}</Card.Title>
-                <Card.Text>{group.description}</Card.Text>
-                <Card.Text>
-                  <strong>Members:</strong> {group.members.join(', ')}
-                </Card.Text>
-                <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
+      <ScrollContainer className="group-list-scroll">
+        {groups.map((group) => (
+          <Card key={group.id} className="group-card">
+            <Card.Body>
+              <Card.Title>{group.name}</Card.Title>
+              <Card.Text>{group.description}</Card.Text>
+              <Card.Text>
+                <strong>Members:</strong> {group.members.join(', ')}
+              </Card.Text>
+              <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
                 View Details
               </Button>
-              </Card.Body>
-            </Card>
-            ))}
-          </div>
-        </div>
-        <Button
-          variant="outline-secondary"
-          className="scroll-button right"
-          onClick={() => scrollList('right')}
-        >
-          <BsCaretRightFill />
-        </Button>
-      </div>
+            </Card.Body>
+          </Card>
+        ))}
+      </ScrollContainer>
 
       {/* Modal for adding a group */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>

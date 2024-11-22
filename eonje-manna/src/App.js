@@ -10,9 +10,13 @@ import GroupPage from './pages/GroupPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 
 import EventDetailPage from './pages/EventDetailPage';
+import LoginPage from './pages/LoginPage';
+
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
+    <AuthProvider>
     <div className="App">
       <BrowserRouter>
         {/* 네비게이션 바 */}
@@ -29,6 +33,7 @@ function App() {
         <div className="main-content"  style={{marginTop: "0px"}}>
           <Routes>
             <Route path="/home" element={<div>Home Page</div>} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/groups" element={<GroupPage />} />
             <Route path="/groups/:id" element={<GroupDetailPage />} />
             <Route path="/Event/:id" element={<EventDetailPage />} />
@@ -38,6 +43,7 @@ function App() {
         </div>
       </BrowserRouter>
     </div>
+    </AuthProvider>
   );
 }
 

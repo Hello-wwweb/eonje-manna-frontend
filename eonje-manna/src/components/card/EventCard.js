@@ -1,8 +1,11 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import './EventCard.css';import { BsCalendar, BsGeoAlt } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 function EventCard({ title, when, where, description }) {
+    const navigate = useNavigate();
     return (
     <Card className="event-card">
         <Card.Body>
@@ -23,6 +26,9 @@ function EventCard({ title, when, where, description }) {
         <div className="event-description">
             <p>{description}</p>
         </div>
+        <Button variant="outline-primary" onClick={() => navigate(`/Event/:id`)}>
+                Date
+        </Button>
         </Card.Body>
     </Card>
     );

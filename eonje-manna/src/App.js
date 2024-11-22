@@ -9,6 +9,8 @@ import NavScrollExample from './components/sidebar/TobBar';
 import GroupPage from './pages/GroupPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 
+import EventDetailPage from './pages/EventDetailPage';
+
 function App() {
   return (
     <div className="App">
@@ -24,11 +26,12 @@ function App() {
         </div>
 
         {/* 메인 콘텐츠 */}
-        <div className="main-content">
+        <div className="main-content"  style={{marginTop: "0px"}}>
           <Routes>
             <Route path="/home" element={<div>Home Page</div>} />
             <Route path="/groups" element={<GroupPage />} />
             <Route path="/groups/:id" element={<GroupDetailPage />} />
+            <Route path="/Event/:id" element={<EventDetailPage />} />
             <Route path="/link-2" element={<div>Link 2 Page</div>} />
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>

@@ -6,9 +6,10 @@ import EventCard from '../components/card/EventCard';
 import MemberCard from '../components/card/MemberCard';
 import ScrollContainer from '../components/container/ScrollContainer';
 
+
 function GroupDetailPage() {
     const { id } = useParams();
-  
+
     // 더미 데이터 (API에서 데이터를 가져오는 경우에는 별도의 상태 관리 필요)
     const groups = [
     {
@@ -23,13 +24,15 @@ function GroupDetailPage() {
         { nickname: 'Bob', email: 'bob@example.com' },
         ],
         events: [
-        {
+        {   
+            event_id: 1,
             title: 'Math Quiz',
             when: '2023-11-25 14:00',
             where: 'Room 101, Study Center',
             description: 'A fun quiz on math topics.',
         },
         {
+            event_id: 2,
             title: 'Weekly Study',
             when: 'Every Friday 17:00',
             where: 'Library',
@@ -38,6 +41,8 @@ function GroupDetailPage() {
         ],
     },
     ];
+
+    
     
     // ID에 해당하는 그룹 찾기
     const group = groups.find((group) => group.id === parseInt(id));
@@ -75,6 +80,7 @@ function GroupDetailPage() {
                     description={event.description}
                 />
                 ))}
+                
             </ScrollContainer>
             </div>
         );

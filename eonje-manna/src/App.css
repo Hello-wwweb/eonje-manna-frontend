@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Cafe24Decobox";
+  font-weight: normal;
+  src: url("./Cafe24Decobox.ttf") format("truetype");
+}
+
+body {
+  font-family: "Cafe24Decobox" !important;
+}
+
 #root, .App {
   height: 100%; /* 전체 화면 높이 사용 */
   display: flex;
@@ -39,6 +49,25 @@
   }
 }
 
+/* variant가 primary인 btn 색 변경*/
+.btn-primary{
+  background-color: #3333c8 !important;
+}
+
+/* variant가 secondary인 btn 색 변경*/
+.btn-secondary{
+  background-color: #7f7fb7 !important;
+}
+
+/*
+.outline-primary{
+}*/
+
+/*아이콘 글 높이 맞추기*/
+svg {
+  margin-bottom: 3px ; 
+  margin-right: 5px;
+} 
 /* 네비게이션 바 스타일 */
 .navbar {
   position: fixed;

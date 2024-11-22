@@ -1,14 +1,31 @@
-.calendarWrapper {
-    align-items: center;
+.container{
+    margin-left: 0px;
     display: flex;
+    justify-content: left;
+    align-items: flex-start;
+}
+.selectedDates {
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    
+    align-items: flex-start;
+    min-width: 100px; /* 최소 너비를 주어서 선택된 날짜들이 보이도록 */
+}
+
+.selectedDates h1 {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .calendar {
     padding: 10px;
     padding-top: 0px;
-    width: 80%;
+    width: 800px;
     
     .year{
         text-align: center;

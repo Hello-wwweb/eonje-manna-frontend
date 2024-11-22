@@ -84,7 +84,7 @@ svg {
   position: fixed;
   top: 60px; /* 네비게이션 바 높이만큼 아래로 */
   left: 0;
-  width: 250px;
+  width: 200px;
   height: calc(100vh - 60px); /* 화면 전체에서 네비게이션 바 높이를 뺀 영역 */
   background-color: #ffffff;
   border-right: 1px solid #ffffff;
@@ -95,7 +95,7 @@ svg {
 /* 메인 콘텐츠 스타일 */
 .main-content {
   margin-top: 60px; /* 네비게이션 바 높이 */
-  margin-left: 250px; /* 사이드바 너비 */
+  margin-left: 200px; /* 사이드바 너비 */
   padding: 20px;
   overflow: auto;
 }

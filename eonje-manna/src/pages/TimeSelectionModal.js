@@ -6,13 +6,16 @@ function TimeSelectionModal({ date, onClose }) {
     const availableTimesList = [
         { name: "Alice", time: ["09", "10", "11", "15", "16"] },
         { name: "Bob", time: ["09","10", "11", "12", "14", "15"] },
-        { name: "Charlie", time: ["09", "13", "14", "16"] },
+        { name: "Charlie", time: ["09", "10", "11", "13", "14", "16"] },
     ];
 
     const [selectedTimes, setSelectedTimes] = useState([]);
 
     // 결과 시간 막대바 만들기 위한 결과시간 State
     const [resultTimes, setResultTimes] = useState([]);
+    
+    // 초기값은 재중이가 주는 교집합으로 설정할거
+    const initialResultTimes = ["09", "10", "11"]
 
     const hours = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, "0")}`);
 
@@ -24,11 +27,11 @@ function TimeSelectionModal({ date, onClose }) {
         }
     };
 
+    // 교집합을 직접 구할 때... (백엔드가 구해주면 필요 X)
     // 결과 시간을 위한 시간 교집합 구하기
     //overlapping : 교집합 시간 넣을 배열
     //person : 각 사람에 대한 처리 하기 위해서
     // 
-    
     const getResult = () => {
         return availableTimesList.reduce((overlapping, person, index) => {
             const personOverlap = selectedTimes.filter((time) =>
@@ -44,8 +47,18 @@ function TimeSelectionModal({ date, onClose }) {
     };
 
     useEffect(() => {
-        setResultTimes(getResult());
+        if (selectedTimes.length === 0) {
+            // 선택된 시간이 없으면 초기값 복원
+            setResultTimes(initialResultTimes);
+        } else {
+            // 초기값과 선택된 시간의 교집합 계산
+            const updatedResult = initialResultTimes.filter((time) =>
+                selectedTimes.includes(time)
+            );
+            setResultTimes(updatedResult);
+        }
     }, [selectedTimes]);
+
 
     const renderSelectableTimeBar = () => (
         <div className="time-bar my-time-bar">

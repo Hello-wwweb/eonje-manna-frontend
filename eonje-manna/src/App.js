@@ -11,6 +11,7 @@ import GroupDetailPage from './pages/GroupDetailPage';
 
 import EventDetailPage from './pages/EventDetailPage';
 import PlaceDetailPage from './pages/PlaceDetailPage';
+import CalendarPage from './pages/calendar';
 function App() {
   return (
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
             <Route path="/Event/:id" element={<EventDetailPage />} />
             <Route path="/Place/:id" element={<PlaceDetailPage />} />
             <Route path="/link-2" element={<div>Link 2 Page</div>} />
+            <Route path="calendar" element={<CalendarPage />}/>
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>
         </div>

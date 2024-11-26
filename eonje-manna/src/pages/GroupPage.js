@@ -17,6 +17,14 @@ function GroupPage() {
   const [addError, setAddError] = useState(null);
   const navigate = useNavigate();
 
+  // const [groups, setGroups] = useState([
+  //   { id: 1, name: 'Study Group', description: 'A group for study enthusiasts', members: ['Alice', 'Bob', 'Charlie'] },
+  //   { id: 2, name: 'Music Lovers', description: 'Share and enjoy music together', members: ['David', 'Eve'] },
+  //   { id: 3, name: 'Book Club', description: 'Discuss and share book reviews', members: ['Frank', 'Grace'] },
+  //   { id: 4, name: 'Tech Innovators', description: 'Explore technology trends', members: ['Heidi', 'Ivan', 'Judy'] },
+  //   { id: 5, name: 'Fitness Buddies', description: 'Stay fit and motivated together', members: ['Karl', 'Laura'] },
+  // ]);
+
   const fetchGroups = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/groups/`, {

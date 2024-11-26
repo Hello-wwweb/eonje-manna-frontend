@@ -19,6 +19,7 @@ const Login = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/login/`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

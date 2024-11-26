@@ -6,6 +6,10 @@ import { BsCaretLeftFill } from "react-icons/bs";
 import { BsCaretRightFill } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
 
+
+// 데이터 주고 받기에 쓸 프레임워크
+import axios from "axios"
+
 function GroupPage() {
   const [groups, setGroups] = useState([
     { id: 1, name: 'Study Group', description: 'A group for study enthusiasts', members: ['Alice', 'Bob', 'Charlie'] },
@@ -18,11 +22,32 @@ function GroupPage() {
   const [newGroup, setNewGroup] = useState({ name: '', description: '' });
   const navigate = useNavigate();
 
+  /*
   const handleAddGroup = () => {
     setGroups([...groups, { id: groups.length + 1, ...newGroup }]);
     setNewGroup({ name: '', description: '' });
     setShowModal(false);
-  };
+  };*/
+   
+  const handleAddGroup = async () => {
+    try { //http://127.0.0.1:8000
+      const Sever_url = process.env.REACT_APP_API_BASE_URL;
+      const response = await axios.post(`http://127.0.0.1:8000/groups/`, {
+        name: newGroup.name,
+        description: newGroup.description,
+      });
+
+      const createdGroup = response.data;
+
+      setGroups([...groups, { id: createdGroup.id, ...createdGroup }]);
+      setNewGroup({ name: '', description: '' });
+      setShowModal(false);
+    } catch (error) {
+      console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
+      console.error("Error details:", error.response?.data || error.message);
+      alert("Failed to add group. Check console for details.");
+    }
+  }
 
   const scrollList = (direction) => {
     const container = document.querySelector('.group-list-container');

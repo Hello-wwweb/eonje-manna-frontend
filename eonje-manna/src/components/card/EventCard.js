@@ -29,6 +29,9 @@ function EventCard({ title, when, where, description }) {
         <Button variant="outline-primary" onClick={() => navigate(`/Event/:id`)}>
                 Date
         </Button>
+        <Button variant="outline-primary" onClick={() => navigate(`/Place/:id`)}>
+                Place
+        </Button>
         </Card.Body>
     </Card>
     );

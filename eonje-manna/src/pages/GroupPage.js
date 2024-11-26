@@ -1,122 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Card, Modal, Form } from 'react-bootstrap';
+import { Button, Card, Modal, Form, Alert } from 'react-bootstrap';
 import './GroupPage.css';
-import { BsCaretLeftFill } from "react-icons/bs";
-import { BsCaretRightFill } from "react-icons/bs";
-import { BsChevronRight } from "react-icons/bs";
+import { BsCaretLeftFill, BsCaretRightFill, BsChevronRight } from "react-icons/bs";
 
-<<<<<<< HEAD
 import ScrollContainer from '../components/container/ScrollContainer';
-=======
 
-// 데이터 주고 받기에 쓸 프레임워크
-import axios from "axios"
->>>>>>> 9e9da89bff2e934cdbacb2ae1a2cadd57f5a682b
+import axiosInstance from '../axiosInstance';
+import axios from 'axios';
 
 function GroupPage() {
   const [groups, setGroups] = useState([]);
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const [error, setError] = useState(null); // 에러 상태
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [newGroup, setNewGroup] = useState({ name: '', description: '' });
   const [addError, setAddError] = useState(null);
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  // const [groups, setGroups] = useState([
-  //   { id: 1, name: 'Study Group', description: 'A group for study enthusiasts', members: ['Alice', 'Bob', 'Charlie'] },
-  //   { id: 2, name: 'Music Lovers', description: 'Share and enjoy music together', members: ['David', 'Eve'] },
-  //   { id: 3, name: 'Book Club', description: 'Discuss and share book reviews', members: ['Frank', 'Grace'] },
-  //   { id: 4, name: 'Tech Innovators', description: 'Explore technology trends', members: ['Heidi', 'Ivan', 'Judy'] },
-  //   { id: 5, name: 'Fitness Buddies', description: 'Stay fit and motivated together', members: ['Karl', 'Laura'] },
-  // ]);
-
   const fetchGroups = async () => {
+    setLoading(true);
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/groups/`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch groups');
-      }
-
-      const data = await response.json();
-      setGroups(data); 
+      const response = await axiosInstance.get('/groups/');
+      setGroups(response.data);
     } catch (err) {
       console.error('Error fetching groups:', err);
-      setError(err.message);
+      setError('Failed to fetch groups. Please try again.');
     } finally {
-      setLoading(false); // 로딩 상태 해제
+      setLoading(false);
     }
   };
-=======
-  /*
-  const handleAddGroup = () => {
-    setGroups([...groups, { id: groups.length + 1, ...newGroup }]);
-    setNewGroup({ name: '', description: '' });
-    setShowModal(false);
-  };*/
-   
-  const handleAddGroup = async () => {
-    try { //http://127.0.0.1:8000
-      const Sever_url = process.env.REACT_APP_API_BASE_URL;
-      const response = await axios.post(`http://127.0.0.1:8000/groups/`, {
-        name: newGroup.name,
-        description: newGroup.description,
-      });
-
-      const createdGroup = response.data;
-
-      setGroups([...groups, { id: createdGroup.id, ...createdGroup }]);
-      setNewGroup({ name: '', description: '' });
-      setShowModal(false);
-    } catch (error) {
-      console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
-      console.error("Error details:", error.response?.data || error.message);
-      alert("Failed to add group. Check console for details.");
-    }
-  }
->>>>>>> 9e9da89bff2e934cdbacb2ae1a2cadd57f5a682b
 
   const addGroup = async () => {
+    setAddError(null); 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/groups/`, {
-        method: 'POST',
+      const response = await axiosInstance.post('/groups/', {
+        name: newGroup.name,
+        description: newGroup.description,
+      }, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: newGroup.name,
-          description: newGroup.description,
-        }),
-        credentials: 'include', 
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to add group');
-      }
-
-      const createdGroup = await response.json();
-      setGroups([...groups, createdGroup]); // 새로 추가된 그룹을 목록에 반영
+  
+      setGroups([...groups, response.data]);
       setNewGroup({ name: '', description: '' });
       setShowModal(false);
-      setAddError(null);
     } catch (err) {
       console.error('Error adding group:', err);
       setAddError('Failed to add group. Please try again.');
     }
   };
 
-  // 컴포넌트가 렌더링될 때 데이터 가져오기
   useEffect(() => {
     fetchGroups();
   }, []);
-
 
   const handleAddGroup = (e) => {
     e.preventDefault();
@@ -132,31 +70,37 @@ function GroupPage() {
         </Button>
       </div>
 
-      {/* 화살표와 리스트 컨테이너 */}
-      <ScrollContainer className="group-list-scroll">
-        {groups.map((group) => (
-          <Card key={group.id} className="group-card">
-            <Card.Body>
-              <Card.Title>{group.name}</Card.Title>
-              <Card.Text>{group.description}</Card.Text>
-              <Card.Text>
-                <strong>Members:</strong> {group.members.join(', ')}
-              </Card.Text>
-              <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
-                View Details
-              </Button>
-            </Card.Body>
-          </Card>
-        ))}
-      </ScrollContainer>
+      {error && <Alert variant="danger">{error}</Alert>}
+      {addError && <Alert variant="danger">{addError}</Alert>}
 
-      {/* Modal for adding a group */}
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <ScrollContainer className="group-list-scroll">
+          {groups.map((group) => (
+            <Card key={group.id} className="group-card">
+              <Card.Body>
+                <Card.Title>{group.name}</Card.Title>
+                <Card.Text>{group.description}</Card.Text>
+                <Card.Text>
+                  <strong>Members:</strong> {Array.isArray(group.members) ? group.members.join(', ') : 'No members'}
+                </Card.Text>
+                <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
+                  View Details
+                </Button>
+              </Card.Body>
+            </Card>
+          ))}
+        </ScrollContainer>
+      )}
+
+      {/* 그룹 추가 모달 */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleAddGroup}>
             <Form.Group controlId="groupName">
               <Form.Label>Group Name</Form.Label>
               <Form.Control
@@ -164,6 +108,7 @@ function GroupPage() {
                 placeholder="Enter group name"
                 value={newGroup.name}
                 onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
+                required
               />
             </Form.Group>
             <Form.Group controlId="groupDescription">
@@ -174,6 +119,7 @@ function GroupPage() {
                 placeholder="Enter group description"
                 value={newGroup.description}
                 onChange={(e) => setNewGroup({ ...newGroup, description: e.target.value })}
+                required
               />
             </Form.Group>
           </Form>
@@ -182,7 +128,7 @@ function GroupPage() {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleAddGroup}>
+          <Button variant="primary" type="submit" onClick={handleAddGroup}>
             Add Group
           </Button>
         </Modal.Footer>

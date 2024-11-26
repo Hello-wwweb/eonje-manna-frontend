@@ -10,15 +10,13 @@ import GroupPage from './pages/GroupPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 
 import EventDetailPage from './pages/EventDetailPage';
-<<<<<<< HEAD
+
 import LoginPage from './pages/LoginPage';
 
 import { AuthProvider } from './context/AuthContext';
 
-=======
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import CalendarPage from './pages/calendar';
->>>>>>> 9e9da89bff2e934cdbacb2ae1a2cadd57f5a682b
 function App() {
   return (
     <AuthProvider>

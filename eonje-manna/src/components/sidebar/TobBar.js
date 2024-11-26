@@ -16,7 +16,7 @@ function NavScrollExample() {
         
         {/* 모바일 토글 */}
         <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll" class="ms-auto d-none d-lg-block">
+        <Navbar.Collapse id="navbarScroll" className="ms-auto d-none d-lg-block">
             
           {/* 검색창 */}
           {/** 

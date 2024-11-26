@@ -36,6 +36,7 @@ function NavScrollExample() {
 
         {/* 모바일 토글 */}
         <Navbar.Toggle aria-controls="navbarScroll" />
+<<<<<<< HEAD
         <Navbar.Collapse id="navbarScroll" className="ms-auto">
           <Nav className="ms-auto">
             {!isAuthenticated ? (
@@ -61,6 +62,43 @@ function NavScrollExample() {
                 <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
             )}
+=======
+        <Navbar.Collapse id="navbarScroll" className="ms-auto d-none d-lg-block">
+            
+          {/* 검색창 */}
+          {/** 
+           *  <Form className="d-flex mx-auto" style={{ width: '50%' }}>
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+        
+          */}
+
+          
+          {/* 프로필 드롭다운 */}
+          <Nav>
+            <NavDropdown
+              title={
+                <img
+                  src="/profile.png"
+                  alt="Profile"
+                  style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+                />
+              }
+              id="profile-dropdown"
+              align="end" // 드롭다운 오른쪽 정렬
+            >
+              <NavDropdown.Item href="#profile">View Profile</NavDropdown.Item>
+              <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#logout">Logout</NavDropdown.Item>
+            </NavDropdown>
+>>>>>>> 9e9da89bff2e934cdbacb2ae1a2cadd57f5a682b
           </Nav>
         </Navbar.Collapse>
       </Container>

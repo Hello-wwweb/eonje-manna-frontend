@@ -6,7 +6,13 @@ import { BsCaretLeftFill } from "react-icons/bs";
 import { BsCaretRightFill } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
 
+<<<<<<< HEAD
 import ScrollContainer from '../components/container/ScrollContainer';
+=======
+
+// 데이터 주고 받기에 쓸 프레임워크
+import axios from "axios"
+>>>>>>> 9e9da89bff2e934cdbacb2ae1a2cadd57f5a682b
 
 function GroupPage() {
   const [groups, setGroups] = useState([]);
@@ -17,6 +23,7 @@ function GroupPage() {
   const [addError, setAddError] = useState(null);
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   // const [groups, setGroups] = useState([
   //   { id: 1, name: 'Study Group', description: 'A group for study enthusiasts', members: ['Alice', 'Bob', 'Charlie'] },
   //   { id: 2, name: 'Music Lovers', description: 'Share and enjoy music together', members: ['David', 'Eve'] },
@@ -47,6 +54,34 @@ function GroupPage() {
       setLoading(false); // 로딩 상태 해제
     }
   };
+=======
+  /*
+  const handleAddGroup = () => {
+    setGroups([...groups, { id: groups.length + 1, ...newGroup }]);
+    setNewGroup({ name: '', description: '' });
+    setShowModal(false);
+  };*/
+   
+  const handleAddGroup = async () => {
+    try { //http://127.0.0.1:8000
+      const Sever_url = process.env.REACT_APP_API_BASE_URL;
+      const response = await axios.post(`http://127.0.0.1:8000/groups/`, {
+        name: newGroup.name,
+        description: newGroup.description,
+      });
+
+      const createdGroup = response.data;
+
+      setGroups([...groups, { id: createdGroup.id, ...createdGroup }]);
+      setNewGroup({ name: '', description: '' });
+      setShowModal(false);
+    } catch (error) {
+      console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
+      console.error("Error details:", error.response?.data || error.message);
+      alert("Failed to add group. Check console for details.");
+    }
+  }
+>>>>>>> 9e9da89bff2e934cdbacb2ae1a2cadd57f5a682b
 
   const addGroup = async () => {
     try {

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./SignupPage.css";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +12,7 @@ const SignupForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-
+  const navigate = useNavigate();
   const validateForm = () => {
     const newErrors = {};
 
@@ -61,6 +63,7 @@ const SignupForm = () => {
       });
       console.log("회원가입 성공:", response.data);
       alert("회원가입에 성공했습니다!");
+      navigate("/login");
     } catch (error) {
       console.error("회원가입 실패:", error.response ? error.response.data : error);
       alert("회원가입에 실패했습니다.");
@@ -68,54 +71,58 @@ const SignupForm = () => {
   };
 
   return (
-    <div>
-      <h1>회원가입</h1>
+    <div className="signup-form">
+      <h1 className="signup-title">SignUp</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">사용자 이름:</label>
+        <div className="form-group">
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
             id="username"
             name="username"
+            className="form-input"
             value={formData.username}
             onChange={handleChange}
           />
-          {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
+          {errors.username && <p className="error-message">{errors.username}</p>}
         </div>
-        <div>
-          <label htmlFor="password">비밀번호:</label>
+        <div className="form-group">
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
             id="password"
             name="password"
+            className="form-input"
             value={formData.password}
             onChange={handleChange}
           />
-          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+          {errors.password && <p className="error-message">{errors.password}</p>}
         </div>
-        <div>
-          <label htmlFor="name">이름:</label>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
             name="name"
+            className="form-input"
             value={formData.name}
             onChange={handleChange}
           />
-          {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
+          {errors.name && <p className="error-message">{errors.name}</p>}
         </div>
-        <div>
-          <label htmlFor="email">이메일:</label>
+        <div className="form-group">
+          <label htmlFor="email">E-mail:</label>
           <input
             type="email"
             id="email"
             name="email"
+            className="form-input"
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
-        <button type="submit">회원가입</button>
+        <button type="submit" className="submit-button">SignUp</button>
       </form>
     </div>
   );

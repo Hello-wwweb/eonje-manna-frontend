@@ -50,11 +50,7 @@ function NavScrollExample() {
               </>
             ) : (
               // 로그인 상태
-              <NavDropdown
-                title="Profile" // 로그인 시 표시될 메뉴 제목
-                id="profile-dropdown"
-                align="end"
-              >
+              <NavDropdown title="Profile" id="profile-dropdown" align="end">
                 <NavDropdown.Item href="#profile">View Profile</NavDropdown.Item>
                 <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
                 <NavDropdown.Divider />

@@ -10,13 +10,13 @@ import GroupPage from './pages/GroupPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 
 import EventDetailPage from './pages/EventDetailPage';
-
 import LoginPage from './pages/LoginPage';
 
 import { AuthProvider } from './context/AuthContext';
 
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import CalendarPage from './pages/calendar';
+import SignupPage from './pages/SignupPage';
 function App() {
   return (
     <AuthProvider>
@@ -37,6 +37,7 @@ function App() {
           <Routes>
             <Route path="/home" element={<div>Home Page</div>} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
             <Route path="/groups" element={<GroupPage />} />
             <Route path="/groups/:id" element={<GroupDetailPage />} />
             <Route path="/Event/:id" element={<EventDetailPage />} />

@@ -1,12 +1,15 @@
 .event-card {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
     margin: 10px auto;
     background: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .event-header {
@@ -50,4 +53,25 @@ color: #007bff; /* 아이콘 색상 */
 font-size: 0.9rem;
 color: #666;
 line-height: 1.5;
+}
+
+.event-buttons .btn,
+.event-buttons .dropdown-toggle {
+    padding: 10px 20px; /* 패딩을 동일하게 설정하여 높이 일치 */
+    font-size: 16px;
+    width: 0%; /* 버튼이 카드 안에 꽉 차도록 설정 */
+    white-space: nowrap; /* 버튼 텍스트가 줄바꿈되지 않도록 설정 */
+}
+
+/* 버튼 그룹을 가로로 배치하고 간격을 주기 */
+.event-buttons {
+    display: flex;
+    flex-direction: row; /* 버튼들을 세로로 배치 */
+    gap: 1px; /* 버튼들 사이 간격 */
+}
+
+/* 드롭다운 버튼 아이템 높이 조정 */
+#picker-dropdown .dropdown-item {
+    padding: 10px 20px; /* 아이템 패딩 맞추기 */
+    font-size: 16px;     /* 글자 크기 동일하게 */
 }

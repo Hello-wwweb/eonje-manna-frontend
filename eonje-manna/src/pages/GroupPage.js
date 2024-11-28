@@ -11,7 +11,6 @@ import axios from 'axios';
 
 function GroupPage() {
   const [groups, setGroups] = useState([]);
-  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [newGroup, setNewGroup] = useState({ name: '', description: '' });
@@ -19,7 +18,6 @@ function GroupPage() {
   const navigate = useNavigate();
 
   const fetchGroups = async () => {
-    setLoading(true);
     try {
       const response = await axiosInstance.get('/groups/');
       setGroups(response.data);
@@ -27,7 +25,6 @@ function GroupPage() {
       console.error('Error fetching groups:', err);
       setError('Failed to fetch groups. Please try again.');
     } finally {
-      setLoading(false);
     }
   };
 
@@ -73,9 +70,6 @@ function GroupPage() {
       {error && <Alert variant="danger">{error}</Alert>}
       {addError && <Alert variant="danger">{addError}</Alert>}
 
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
         <ScrollContainer className="group-list-scroll">
           {groups.map((group) => (
             <Card key={group.id} className="group-card">
@@ -92,7 +86,7 @@ function GroupPage() {
             </Card>
           ))}
         </ScrollContainer>
-      )}
+      
 
       {/* 그룹 추가 모달 */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
-
+import axiosInstance from '../axiosInstance';
 function MapPage({ eventId, memberId }) {
   const mapContainer = useRef(null); // 지도 컨테이너
   const [map, setMap] = useState(null); // 지도 객체
@@ -49,7 +49,7 @@ function MapPage({ eventId, memberId }) {
   // 기존 마커 불러오기
   const loadMarkers = useCallback(
     (map) => {
-      axios
+      axiosInstance
         .get(`/api/markers/${eventId}`)
         .then((response) => {
           const loadedMarkers = response.data || [];
@@ -144,6 +144,16 @@ function MapPage({ eventId, memberId }) {
           window.kakao.maps.event.addListener(newMarker, "mouseout", () => {
             infowindow.current.close();
           });
+          // 마커 추가 함수 내에 마커 데이터를 서버에 저장하는 로직 추가
+          axiosInstance.post('/api/markers/save', newMarkerData)
+            .then(response => {
+              console.log('마커 저장 성공:', response.data);
+              setMarkers(currentMarkers => [...currentMarkers, { ...newMarkerData, id: response.data.id }]);
+            })
+            .catch(error => {
+              console.error('마커 저장 실패:', error);
+              alert('마커를 저장하는 중 문제가 발생했습니다.');
+            });
 
           setMarkers((currentMarkers) => [...currentMarkers, newMarkerData]);
         } else {
@@ -175,7 +185,7 @@ function MapPage({ eventId, memberId }) {
       );
 
       // 백엔드로 삭제 요청
-      axios
+      axiosInstance
         .delete(`/api/markers/${markerData.id}`)
         .then(() => {
           console.log("마커가 성공적으로 삭제되었습니다.");
@@ -238,15 +248,16 @@ function MapPage({ eventId, memberId }) {
     setUserVote(markerId);
 
     // 백엔드에 투표 반영 요청
-    axios
-      .post(`/api/markers/vote`, { markerId, previousVote: userVote })
-      .then(() => {
-        console.log("투표가 성공적으로 반영되었습니다.");
-      })
-      .catch((error) => {
-        console.error("투표 반영 중 오류 발생:", error);
-        alert("투표 중 문제가 발생했습니다.");
-      });
+    axiosInstance.post(`/api/events/${eventId}/votes`, { markerId, previousVote: userVote })
+      .then(response => {
+        console.log('투표 성공:', response.data);
+    // 투표 관련 상태 업데이트 로직
+  })
+      .catch(error => {
+        console.error('투표 실패:', error);
+        alert('투표 중 문제가 발생했습니다.');
+  });
+
   };
 
   return (

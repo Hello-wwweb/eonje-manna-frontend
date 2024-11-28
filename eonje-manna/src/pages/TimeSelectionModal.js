@@ -31,7 +31,6 @@ function TimeSelectionModal({ date, onClose }) {
     // 결과 시간을 위한 시간 교집합 구하기
     //overlapping : 교집합 시간 넣을 배열
     //person : 각 사람에 대한 처리 하기 위해서
-    // 
     const getResult = () => {
         return availableTimesList.reduce((overlapping, person, index) => {
             const personOverlap = selectedTimes.filter((time) =>

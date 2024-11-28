@@ -12,6 +12,7 @@ function MapPage({ eventId, memberId }) {
   const infowindow = useRef(null); // InfoWindow 객체
 
   useEffect(() => {
+    
     const script = document.createElement("script");
     script.src =
       "//dapi.kakao.com/v2/maps/sdk.js?appkey=618cc5a8a4d8f5e173dc58eaf13948c5&libraries=services,clusterer&autoload=false";

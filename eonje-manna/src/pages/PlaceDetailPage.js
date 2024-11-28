@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
-
+import "./PlaceDetailPage.css";
 function MapPage({ eventId, memberId }) {
   const mapContainer = useRef(null); // 지도 컨테이너
   const [map, setMap] = useState(null); // 지도 객체
@@ -9,6 +9,7 @@ function MapPage({ eventId, memberId }) {
   const [userVote, setUserVote] = useState(null); // 현재 사용자의 투표 대상
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색 키워드
   const [places, setPlaces] = useState([]); // 검색 결과 리스트
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const infowindow = useRef(null); // InfoWindow 객체
 
   useEffect(() => {
@@ -199,12 +200,14 @@ function MapPage({ eventId, memberId }) {
     ps.keywordSearch(searchKeyword, (data, status) => {
       if (status === window.kakao.maps.services.Status.OK) {
         setPlaces(data);
-
+        setIsModalOpen(true);
+        setSearchKeyword("");
+        /*
         const bounds = new window.kakao.maps.LatLngBounds();
         data.forEach((place) => {
           bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
         });
-        map.setBounds(bounds);
+        map.setBounds(bounds);*/
       } else {
         alert("검색 결과가 없습니다.");
       }
@@ -216,8 +219,12 @@ function MapPage({ eventId, memberId }) {
     const latLng = new window.kakao.maps.LatLng(place.y, place.x);
     addMarkerWithPlaceName(latLng, map);
     setPlaces([]);
+    setIsModalOpen(false);
   };
-
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   // 투표 수 처리 함수
   const handleVote = (markerId) => {
     // 이전 투표가 있는 경우 해당 마커의 투표 수 감소
@@ -250,45 +257,60 @@ function MapPage({ eventId, memberId }) {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={searchKeyword}
-        onChange={(e) => setSearchKeyword(e.target.value)}
-        placeholder="키워드를 입력하세요"
-      />
-      <button onClick={searchPlaces}>검색</button>
-
-      {places.length > 0 && (
-        <ul>
-          {places.map((place) => (
-            <li key={place.id}>
-              <strong>{place.place_name}</strong> - {place.address_name}
-              <button onClick={() => handlePlaceSelection(place)}>선택</button>
-            </li>
-          ))}
-        </ul>
+    <div  className="Container">
+      <div className="SearchPlace">
+        <input
+          type="text"
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          placeholder="키워드를 입력하세요"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              searchPlaces(); 
+            }
+          }}
+        />
+        <button className="Search-btn"onClick={searchPlaces}>검색</button>
+      </div>
+      
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close-button" onClick={closeModal}>
+              ✖
+            </button>
+            <div className="Modal-place">
+              <ul>
+                {places.map((place) => (
+                  <li key={place.id} onClick={() => handlePlaceSelection(place)}>
+                    <strong>{place.place_name}</strong> - {place.address_name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       )}
 
       <div ref={mapContainer} style={{ width: "100%", height: "500px", marginTop: "10px" }}></div>
 
-      <div style={{ marginTop: "10px", padding: "10px", backgroundColor: "#f9f9f9" }}>
-        <h3>투표 리스트</h3>
-        <ul>
+      
+      {/* 강건우가 해둔 스타일-> marginTop: "10px", padding: "10px", backgroundColor: "#f9f9f9"*/}
+      <div className="places-container">
+        <h3>장소 투표</h3>
           {markers.map((marker) => (
-            <li key={marker.id}>
+            <div class="place"key={marker.id}>
               <strong>{marker.place_name}</strong>
               <span style={{ marginLeft: "10px" }}>투표 수: {votes[marker.id] || 0}</span>
-              <button
+              <button className="vote-btn"
                 style={{ marginLeft: "10px" }}
                 onClick={() => handleVote(marker.id)}
                 disabled={userVote === marker.id}
               >
                 {userVote === marker.id ? "투표 완료" : "투표"}
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
       </div>
     </div>
   );

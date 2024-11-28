@@ -25,6 +25,7 @@ function StackedTab() {
       <Nav.Link eventKey="dashboard"><BsCompass /> Dashboard</Nav.Link>
       <Nav.Link eventKey="calendar"><BsCalendar /> Calendar</Nav.Link>
       <Nav.Link eventKey="groups"><BsPeopleFill /> Groups</Nav.Link>
+      <Nav.Link eventKey="place">Places</Nav.Link>
       <Nav.Link eventKey="settings" disabled>
       <BsGearFill /> Settings
       </Nav.Link>

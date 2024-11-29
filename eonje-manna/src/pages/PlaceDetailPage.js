@@ -34,7 +34,9 @@ function MapPage() {
 
         const initMap = new window.kakao.maps.Map(mapContainer.current, options);
         setMap(initMap);
+        loadMarkers(initMap);
 
+        //loadVotes();
         // InfoWindow 초기화
         infowindow.current = new window.kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -45,33 +47,28 @@ function MapPage() {
         });
 
         // 기존 마커 로드
-        loadMarkers(initMap);
 
-        loadVotes();
       });
     };
 
     document.head.appendChild(script);
     return () => script.remove();
   }, []);
-  const loadVotes = useCallback(() => {
-    axiosInstance
-      .get(`/api/events/${eventId}/votes`, { params: { place: 'place_name' } })
+  //const loadVotes = useCallback(() => {
+    // axiosInstance
+    //   .get(`/api/events/${eventId}/votes/`, { params: { place: 'place_name' } })
 
-      .then((response) => {
-        const voteData = response.data;
-        const votesMap = voteData.reduce((acc, vote) => {
-          acc[vote.marker_id] = vote.votes;
-          return acc;
-        }, {});
+    //   .then((response) => {
+    //     const voteData = response.data;
+    //     const votesMap = voteData.reduce((acc, vote) => {
+    //       acc[vote.marker_id] = vote.votes;
+    //       return acc;
+    //     }, {});
   
-        setVotes(votesMap); // 상태에 투표 데이터 저장
-      })
-      .catch((error) => {
-        console.error("투표 데이터 로드 중 오류 발생:", error);
-        alert("투표 데이터를 불러오는 중 문제가 발생했습니다.");
-      });
-  }, [eventId]);
+    //     setVotes(votesMap); // 상태에 투표 데이터 저장
+    //   })
+      
+  //}, [eventId]);
   // 기존 마커 불러오기
   const loadMarkers = useCallback(
     (map) => {
@@ -110,17 +107,20 @@ function MapPage() {
               infowindow.current.close();
             });
 
-            setMarkers((currentMarkers) => [
-              ...currentMarkers,
-              {
+            setMarkers((currentMarkers) => {
+              if (currentMarkers.some((marker) => marker.id === markerData.id)) {
+                return currentMarkers; // 이미 존재하면 추가하지 않음
+              }
+              return [...currentMarkers, {
                 id: markerData.id,
                 event_id: markerData.event_id,
                 member_id: markerData.member_id,
                 latitude: markerData.latitude,
                 longitude: markerData.longitude,
                 place_name: markerData.place_name,
-              },
-            ]);
+              }];
+            });
+            
           });
         })
         .catch((error) => {
@@ -156,7 +156,8 @@ function MapPage() {
 
           // 마커 클릭 이벤트 등록
           window.kakao.maps.event.addListener(newMarker, "click", () => {
-            handleMarkerClick(newMarker, newMarkerData); // 삭제 조건 확인
+            handleMarkerClick(newMarker, newMarkerData);
+            infowindow.current.close(); // 삭제 조건 확인
           });
 
           // 마커에 마우스오버 이벤트 등록
@@ -175,17 +176,33 @@ function MapPage() {
           axiosInstance.post('/api/markers/save', newMarkerData)
             .then(response => {
               console.log('마커 저장 성공:', response.data);
-              setMarkers(currentMarkers => [...currentMarkers, { ...newMarkerData, id: response.data.id }]);
+              setMarkers((currentMarkers) => {
+                // 기존에 동일한 ID를 가진 마커가 있는지 확인
+                if (currentMarkers.some((marker) => marker.id === newMarkerData.id)) {
+                  return currentMarkers; // 중복된 경우 추가하지 않음
+                }
+                return [...currentMarkers, newMarkerData];
+              });
+              
             })
-            .catch(error => {
-              console.error('마커 저장 실패:', error);
-              alert('마커를 저장하는 중 문제가 발생했습니다.');
-            });
+            
 
-          setMarkers((currentMarkers) => [...currentMarkers, newMarkerData]);
-        } else {
-          alert("장소 정보를 가져오는 데 실패했습니다.");
-        }
+            setMarkers((currentMarkers) => {
+              // 동일한 위치와 이름의 마커가 이미 존재하면 추가하지 않음
+              if (
+                currentMarkers.some(
+                  (marker) =>
+                    marker.latitude === newMarkerData.latitude &&
+                    marker.longitude === newMarkerData.longitude &&
+                    marker.place_name === newMarkerData.place_name
+                )
+              ) {
+                return currentMarkers;
+              }
+              return [...currentMarkers, newMarkerData];
+            });
+            
+        } 
       });
     },
     [eventId, memberId]
@@ -212,16 +229,16 @@ function MapPage() {
       );
 
       // 백엔드로 삭제 요청
-      axiosInstance
-        .delete(`/api/events/${eventId}/votes`, { data: { event: eventId } })
+      // axiosInstance
+      //   .delete(`/api/events/${eventId}/votes`, { data: { event: eventId } })
 
-        .then(() => {
-          console.log("마커가 성공적으로 삭제되었습니다.");
-        })
-        .catch((error) => {
-          console.error("마커 삭제 중 오류 발생:", error);
-          alert("마커 삭제 중 문제가 발생했습니다.");
-        });
+      //   .then(() => {
+      //     console.log("마커가 성공적으로 삭제되었습니다.");
+      //   })
+      //   .catch((error) => {
+      //     console.error("마커 삭제 중 오류 발생:", error);
+      //     alert("마커 삭제 중 문제가 발생했습니다.");
+      //   });
     },
     [memberId]
   );
@@ -282,18 +299,15 @@ function MapPage() {
     setUserVote(markerId);
 
     // 백엔드에 투표 반영 요청
-    axiosInstance.post(`/api/events/${eventId}/votes`, { 
-      markerId,
-      previousVote : userVote,
-     })
-      .then(response => {
-        console.log('투표 성공:', response.data);
+    // axiosInstance.post(`/api/events/${eventId}/votes`, { 
+    //   markerId,
+    //   previousVote : userVote,
+    //  })
+    //   .then(response => {
+    //     console.log('투표 성공:', response.data);
     // 투표 관련 상태 업데이트 로직
-  })
-      .catch(error => {
-        console.error('투표 실패:', error);
-        alert('투표 중 문제가 발생했습니다.');
-  });
+  // })
+      ;
 
   };
 
@@ -339,19 +353,21 @@ function MapPage() {
       {/* 강건우가 해둔 스타일-> marginTop: "10px", padding: "10px", backgroundColor: "#f9f9f9"*/}
       <div className="places-container">
         <h3>장소 투표</h3>
-          {markers.map((marker) => (
-            <div class="place"key={marker.id}>
-              <strong>{marker.place_name}</strong>
-              <span style={{ marginLeft: "10px" }}>투표 수: {votes[marker.id] || 0}</span>
-              <button className="vote-btn"
-                style={{ marginLeft: "10px" }}
-                onClick={() => handleVote(marker.id)}
-                disabled={userVote === marker.id}
-              >
-                {userVote === marker.id ? "투표 완료" : "투표"}
-              </button>
-            </div>
-          ))}
+        {markers.map((marker) => (
+  <div className="place" key={marker.id}> {/* marker.id가 고유해야 함 */}
+    <strong>{marker.place_name}</strong>
+    <span style={{ marginLeft: "10px" }}>투표 수: {votes[marker.id] || 0}</span>
+    <button
+      className="vote-btn"
+      style={{ marginLeft: "10px" }}
+      onClick={() => handleVote(marker.id)}
+      disabled={userVote === marker.id}
+    >
+      {userVote === marker.id ? "투표 완료" : "투표"}
+    </button>
+  </div>
+))}
+
       </div>
     </div>
   );

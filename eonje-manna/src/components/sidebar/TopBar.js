@@ -44,19 +44,19 @@ function NavScrollExample() {
               // 비로그인 상태
               <ButtonGroup className="ms-auto">
                 <Button variant="outline-primary" className="me-2" onClick={handleLogin}>
-                  Login
+                  로그인
                 </Button>
                 <Button variant="primary" onClick={handleSignup}>
-                  Signup
+                  회원가입
                 </Button>
               </ButtonGroup>
             ) : (
               // 로그인 상태
               <NavDropdown title="Profile" id="profile-dropdown" className="profile-dropdown">
-                <NavDropdown.Item href="#profile">View Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
+                <NavDropdown.Item href="#profile">프로필 보기</NavDropdown.Item>
+                <NavDropdown.Item href="#settings">설정</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}>로그아웃</NavDropdown.Item>
               </NavDropdown>
             )}
           </Nav>

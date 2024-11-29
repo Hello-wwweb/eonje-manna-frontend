@@ -111,9 +111,9 @@ function GroupDetailPage() {
 
         
             <div className="section-header">
-                <h2>Members</h2>
+                <h2>멤버</h2>
                 <Button variant="primary" onClick={() => setShowInviteModal(true)} className="ml-auto">
-                    Invite Members
+                    멤버 초대하기
                 </Button>
             </div>
             
@@ -131,14 +131,14 @@ function GroupDetailPage() {
                         />
                     ))
                 ) : (
-                    <p>No members found</p>
+                    <p>멤버를 찾지 못했습니다</p>
                 )}
             </ScrollContainer>
         
             <div className="section-header">
-                <h2>Events</h2>
+                <h2>일정</h2>
                 <Button variant="success" onClick={() => setShowEventModal(true)} className="ml-auto">
-                    Create Event
+                    약속 만들기
                 </Button>
             </div>
             <ScrollContainer className="events-container">
@@ -156,22 +156,22 @@ function GroupDetailPage() {
                         />
                     ))
                 ) : (
-                    <p>No events found</p>
+                    <p>일정을 찾지 못했습니다</p>
                 )}
                 
             </ScrollContainer>
             
             <Modal show={showInviteModal} onHide={() => setShowInviteModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Invite Member</Modal.Title>
+                    <Modal.Title>멤버 초대하기</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="inviteEmail">
-                            <Form.Label>Email Address</Form.Label>
+                            <Form.Label>메일 주소</Form.Label>
                             <Form.Control
                                 type="email"
-                                placeholder="Enter email"
+                                placeholder="초대할 사람의 메일을 입력해주세요"
                                 value={inviteEmail}
                                 onChange={(e) => setInviteEmail(e.target.value)}
                             />
@@ -180,29 +180,29 @@ function GroupDetailPage() {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowInviteModal(false)}>Close</Button>
-                    <Button variant="primary" onClick={handleInviteSubmit}>Send Invite</Button>
+                    <Button variant="secondary" onClick={() => setShowInviteModal(false)}>닫기</Button>
+                    <Button variant="primary" onClick={handleInviteSubmit}>초대 보내기</Button>
                 </Modal.Footer>
             </Modal>
 
             <Modal show={showEventModal} onHide={() => setShowEventModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create Event</Modal.Title>
+                    <Modal.Title>약속 만들기</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="eventName">
-                            <Form.Label>Event Name</Form.Label>
+                            <Form.Label>약속 이름</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Enter event name"
+                                placeholder="약속 이름을 입력해주세요"
                                 value={newEvent.name}
                                 onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
                             />
                         </Form.Group>
 
                         <Form.Group controlId="eventDescription">
-                            <Form.Label>Event Description</Form.Label>
+                            <Form.Label>약속 설명을 작성해주세요</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter event description"
@@ -224,7 +224,7 @@ function GroupDetailPage() {
                             <Form.Label>Event Location</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Enter event location"
+                                placeholder="약속 장소를 입력해주세요"
                                 value={newEvent.where}
                                 onChange={(e) => setNewEvent({ ...newEvent, where: e.target.value })}
                             />
@@ -232,8 +232,8 @@ function GroupDetailPage() {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowEventModal(false)}>Close</Button>
-                    <Button variant="primary" onClick={handleEventSubmit}>Create Event</Button>
+                    <Button variant="secondary" onClick={() => setShowEventModal(false)}>닫기</Button>
+                    <Button variant="primary" onClick={handleEventSubmit}>약속 만들기</Button>
                 </Modal.Footer>
             </Modal>
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./SignupPage.css";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosInstance";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/signup/`, formData, {
+      const response = await axiosInstance.post("/signup/", formData, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -13,7 +13,7 @@ const TimeBarResult = ({ timeData, totalMembers }) => {
         } else if (count > 0) {
             return 'available'; // Some members selected this time
         } else {
-            return ''; // No members selected this time
+            return 'default'; // No members selected this time
         }
     };
 

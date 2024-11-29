@@ -95,5 +95,21 @@
         .diffMonth {
             color:#ddd;
         }
+
+        .default {
+            background-color: #ffffff;
+        }
+        
+
+        .best {
+            background-color: #0080ff; /* 모든 사람이 선택한 날짜 */
+        }
+        
+        .available {
+            background-color: #f9d423; /* 일부 사람이 선택한 날짜 */
+        }
+
+        
+        
     }
 }

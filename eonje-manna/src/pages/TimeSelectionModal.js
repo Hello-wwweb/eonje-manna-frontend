@@ -23,9 +23,9 @@ function TimeSelectionModal({ event_id, date, onClose }) {
             const dateObj = new Date(date);
             
             // year, month, day 추출
-            const year = dateObj.getFullYear();
-            const month = dateObj.getMonth() + 1;  // getMonth()는 0부터 시작하므로 1을 더해줘야 함
-            const day = dateObj.getDate();
+            const year = String(dateObj.getFullYear());  // string으로 변환
+            const month = String(dateObj.getMonth() + 1);  // string으로 변환
+            const day = String(dateObj.getDate());
     
             // 쿼리 파라미터로 year, month, day를 전달
             const response = await axiosInstance.get('/event-date-selections/search', {
@@ -33,6 +33,8 @@ function TimeSelectionModal({ event_id, date, onClose }) {
             });
 
             setEventDateSelections(response.data);  // Store fetched selections in state
+
+            console.log("selections", response.data);
         } catch (error) {
             console.error('Error fetching event date selections:', error);
         }

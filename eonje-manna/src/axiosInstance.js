@@ -8,6 +8,7 @@ import { useAuth } from './context/AuthContext';
 import Spinner from 'react-bootstrap/Spinner';
 
 const axiosInstance = axios.create({
+  
   headers: {
     'Content-Type': 'application/json',
   },

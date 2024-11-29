@@ -47,7 +47,7 @@ function App() {
             <Route path="/groups" element={<GroupPage />} />
             <Route path="/groups/:id" element={<GroupDetailPage />} />
             <Route path="/event/:event_id" element={<EventCalendarPage />} />
-            <Route path="/places/:id" element={<PlaceDetailPage />} />
+            <Route path="/places/:event_id" element={<PlaceDetailPage />} />
             <Route path="/calendar" element={<EventCalendarPage />}/>
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>

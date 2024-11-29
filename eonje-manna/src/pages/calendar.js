@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import './EventDetailPage.css'
+import './calendar.css'
 
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { useCallback, useMemo, useState } from 'react';

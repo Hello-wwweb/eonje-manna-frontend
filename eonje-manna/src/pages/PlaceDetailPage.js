@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import axios from "axios";
+import {useParams} from "react-router-dom";
 import axiosInstance from '../axiosInstance';
 
 import "./PlaceDetailPage.css";
 
-function MapPage({ eventId, memberId }) {
+function MapPage() {
+  const {event_id, member_id} = useParams();
+  const eventId = event_id;
+  const memberId = member_id;
   const mapContainer = useRef(null); // 지도 컨테이너
   const [map, setMap] = useState(null); // 지도 객체
   const [markers, setMarkers] = useState([]); // 활성 마커 배열
@@ -43,17 +46,37 @@ function MapPage({ eventId, memberId }) {
 
         // 기존 마커 로드
         loadMarkers(initMap);
+
+        loadVotes();
       });
     };
 
     document.head.appendChild(script);
     return () => script.remove();
   }, []);
+  const loadVotes = useCallback(() => {
+    axiosInstance
+      .get(`/api/events/${eventId}/votes`, { params: { place: 'place_name' } })
 
+      .then((response) => {
+        const voteData = response.data;
+        const votesMap = voteData.reduce((acc, vote) => {
+          acc[vote.marker_id] = vote.votes;
+          return acc;
+        }, {});
+  
+        setVotes(votesMap); // 상태에 투표 데이터 저장
+      })
+      .catch((error) => {
+        console.error("투표 데이터 로드 중 오류 발생:", error);
+        alert("투표 데이터를 불러오는 중 문제가 발생했습니다.");
+      });
+  }, [eventId]);
   // 기존 마커 불러오기
   const loadMarkers = useCallback(
     (map) => {
       axiosInstance
+        
         .get(`/api/markers/${eventId}`)
         .then((response) => {
           const loadedMarkers = response.data || [];
@@ -190,7 +213,8 @@ function MapPage({ eventId, memberId }) {
 
       // 백엔드로 삭제 요청
       axiosInstance
-        .delete(`/api/markers/${markerData.id}`)
+        .delete(`/api/events/${eventId}/votes`, { data: { event: eventId } })
+
         .then(() => {
           console.log("마커가 성공적으로 삭제되었습니다.");
         })
@@ -258,7 +282,10 @@ function MapPage({ eventId, memberId }) {
     setUserVote(markerId);
 
     // 백엔드에 투표 반영 요청
-    axiosInstance.post(`/api/events/${eventId}/votes`, { markerId, previousVote: userVote })
+    axiosInstance.post(`/api/events/${eventId}/votes`, { 
+      markerId,
+      previousVote : userVote,
+     })
       .then(response => {
         console.log('투표 성공:', response.data);
     // 투표 관련 상태 업데이트 로직

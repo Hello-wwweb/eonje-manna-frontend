@@ -56,7 +56,7 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/signup/", formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/signup/`, formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -72,10 +72,10 @@ const SignupForm = () => {
 
   return (
     <div className="signup-form">
-      <h1 className="signup-title">SignUp</h1>
+      <h1 className="signup-title">회원가입</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username">아이디</label>
           <input
             type="text"
             id="username"
@@ -87,7 +87,7 @@ const SignupForm = () => {
           {errors.username && <p className="error-message">{errors.username}</p>}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">비밀번호</label>
           <input
             type="password"
             id="password"
@@ -99,7 +99,7 @@ const SignupForm = () => {
           {errors.password && <p className="error-message">{errors.password}</p>}
         </div>
         <div className="form-group">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">이름</label>
           <input
             type="text"
             id="name"
@@ -111,7 +111,7 @@ const SignupForm = () => {
           {errors.name && <p className="error-message">{errors.name}</p>}
         </div>
         <div className="form-group">
-          <label htmlFor="email">E-mail:</label>
+          <label htmlFor="email">메일 주소</label>
           <input
             type="email"
             id="email"
@@ -122,7 +122,7 @@ const SignupForm = () => {
           />
           {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
-        <button type="submit" className="submit-button">SignUp</button>
+        <button type="submit" className="submit-button">회원가입</button>
       </form>
     </div>
   );

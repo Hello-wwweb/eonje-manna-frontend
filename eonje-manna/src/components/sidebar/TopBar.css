@@ -1,0 +1,61 @@
+/* Navbar 전체 스타일 */
+.navbar {
+    position: fixed;
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    padding: 10px 20px;
+    flex-wrap: nowrap; /* 화면 크기 줄어들 때 아이템들이 두 줄로 배치되지 않도록 설정 */
+  }
+
+  body {
+    padding-top: 70px;  /* 네비바의 높이에 맞춰 여백을 추가 (네비바 높이: 70px) */
+  }
+  
+  
+  /* 로고 (Home) */
+  .navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+    flex: 1; /* 로고가 왼쪽 끝에 있도록 설정 */
+  }
+  
+  /* 오른쪽 Nav (로그인 / 회원가입 버튼, 또는 프로필 토글) */
+  .navbar .navbar-collapse {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 끝 정렬 */
+    align-items: center;
+    flex-wrap: nowrap; /* 버튼들 간 줄바꿈 방지 */
+  }
+  
+  /* 버튼 그룹화: 로그인 / 회원가입 버튼 */
+  .navbar .btn, .navbar .dropdown-toggle {
+    margin-left: 10px; /* 버튼과 드롭다운 간 간격 */
+    font-size: 16px;
+  }
+  
+  /* 로그인/회원가입 버튼 */
+  .navbar .btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+  }
+  
+  .navbar .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+  }
+  
+  /* 드롭다운 메뉴 스타일 */
+  .navbar .profile-dropdown {
+    position: relative; /* 부모 요소를 기준으로 위치를 설정 */
+  }
+  
+  .navbar .profile-dropdown .dropdown-menu {
+    position: absolute;
+    right: 0; /* 오른쪽 끝으로 드롭다운 메뉴가 벗어나도록 설정 */
+    z-index: 1000;
+  }

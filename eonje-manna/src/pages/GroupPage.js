@@ -11,7 +11,6 @@ import axios from 'axios';
 
 function GroupPage() {
   const [groups, setGroups] = useState([]);
-  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [newGroup, setNewGroup] = useState({ name: '', description: '' });
@@ -19,7 +18,6 @@ function GroupPage() {
   const navigate = useNavigate();
 
   const fetchGroups = async () => {
-    setLoading(true);
     try {
       const response = await axiosInstance.get('/groups/');
       setGroups(response.data);
@@ -27,7 +25,6 @@ function GroupPage() {
       console.error('Error fetching groups:', err);
       setError('Failed to fetch groups. Please try again.');
     } finally {
-      setLoading(false);
     }
   };
 
@@ -66,16 +63,13 @@ function GroupPage() {
       <div className="header">
         <h1>Groups</h1>
         <Button variant="primary" onClick={() => setShowModal(true)}>
-          + Add Group
+          + 그룹 만들기
         </Button>
       </div>
 
       {error && <Alert variant="danger">{error}</Alert>}
       {addError && <Alert variant="danger">{addError}</Alert>}
 
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
         <ScrollContainer className="group-list-scroll">
           {groups.map((group) => (
             <Card key={group.id} className="group-card">
@@ -83,40 +77,40 @@ function GroupPage() {
                 <Card.Title>{group.name}</Card.Title>
                 <Card.Text>{group.description}</Card.Text>
                 <Card.Text>
-                  <strong>Members:</strong> {Array.isArray(group.members) ? group.members.join(', ') : 'No members'}
+                  <strong>멤버:</strong> {Array.isArray(group.members) ? group.members.join(', ') : '멤버가 없습니다'}
                 </Card.Text>
                 <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
-                  View Details
+                  자세히 보기
                 </Button>
               </Card.Body>
             </Card>
           ))}
         </ScrollContainer>
-      )}
+      
 
       {/* 그룹 추가 모달 */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Group</Modal.Title>
+          <Modal.Title>그룹 만들기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleAddGroup}>
             <Form.Group controlId="groupName">
-              <Form.Label>Group Name</Form.Label>
+              <Form.Label>그룹 이름</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter group name"
+                placeholder="그룹 이름을 입력해주세요"
                 value={newGroup.name}
                 onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
                 required
               />
             </Form.Group>
             <Form.Group controlId="groupDescription">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>그룹 설명</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder="Enter group description"
+                placeholder="그룹 설명을 작성해주세요"
                 value={newGroup.description}
                 onChange={(e) => setNewGroup({ ...newGroup, description: e.target.value })}
                 required
@@ -126,10 +120,10 @@ function GroupPage() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancel
+            닫기
           </Button>
           <Button variant="primary" type="submit" onClick={handleAddGroup}>
-            Add Group
+            그룹 추가
           </Button>
         </Modal.Footer>
       </Modal>

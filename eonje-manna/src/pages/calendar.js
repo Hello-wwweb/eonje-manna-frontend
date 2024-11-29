@@ -37,7 +37,7 @@ function EventDetailPage(){
     const monthEnd = endOfMonth(currentDate);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-    const weekMock = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    const weekMock = ["일", "월", "화", "수", "목", "금", "토"]
     const nextMonthHandler = useCallback(()=>{
         setCurrentDate(addMonths(currentDate, 1));
     }, [currentDate]);

@@ -4,7 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import StackedTab from './components/sidebar/StackedTab';
-import NavScrollExample from './components/sidebar/TobBar';
+import NavScrollExample from './components/sidebar/TopBar';
 
 import GroupPage from './pages/GroupPage';
 import GroupDetailPage from './pages/GroupDetailPage';
@@ -13,15 +13,23 @@ import EventDetailPage from './pages/EventDetailPage';
 import LoginPage from './pages/LoginPage';
 
 import { AuthProvider } from './context/AuthContext';
+import { AxiosInterceptor } from './axiosInstance';
+
 
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import CalendarPage from './pages/calendar';
 import SignupPage from './pages/SignupPage';
+
+import DashboardPage from './pages/DashboardPage';
+
 function App() {
+
   return (
     <AuthProvider>
-    <div className="App">
       <BrowserRouter>
+      <AxiosInterceptor>
+    <div className="App">
+      
         {/* 네비게이션 바 */}
         <div className="navBar">
           <NavScrollExample />
@@ -40,15 +48,20 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/groups" element={<GroupPage />} />
             <Route path="/groups/:id" element={<GroupDetailPage />} />
-            <Route path="/Event/:id" element={<EventDetailPage />} />
-            <Route path="/Place/:id" element={<PlaceDetailPage />} />
-            <Route path="/link-2" element={<div>Link 2 Page</div>} />
-            <Route path="calendar" element={<CalendarPage />}/>
+            <Route path="/event/:id" element={<EventDetailPage />} />
+            <Route path="/places/:id" element={<PlaceDetailPage />} />
+            <Route path="/calendar" element={<CalendarPage />}/>
+            <Route path="/dashboard" element={<DashboardPage />}/>
+
+            <Route path="/place" element={<PlaceDetailPage />}/>
+
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>
         </div>
-      </BrowserRouter>
+      
     </div>
+    </AxiosInterceptor>
+    </BrowserRouter>
     </AuthProvider>
   );
 }

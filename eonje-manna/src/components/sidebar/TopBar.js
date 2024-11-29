@@ -7,6 +7,9 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { BsHouse } from "react-icons/bs";
 import { useAuth } from "../../context/AuthContext";
+import { ButtonGroup } from "react-bootstrap";
+
+import "./TopBar.css";
 
 function NavScrollExample() {
   const { isAuthenticated, login, logout } = useAuth(); // 로그인 상태와 관리 함수 가져오기
@@ -35,26 +38,25 @@ function NavScrollExample() {
         </Navbar.Brand>
 
         {/* 모바일 토글 */}
-        <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="ms-auto">
           <Nav className="ms-auto">
             {!isAuthenticated ? (
               // 비로그인 상태
-              <>
+              <ButtonGroup className="ms-auto">
                 <Button variant="outline-primary" className="me-2" onClick={handleLogin}>
-                  Login
+                  로그인
                 </Button>
                 <Button variant="primary" onClick={handleSignup}>
-                  Signup
+                  회원가입
                 </Button>
-              </>
+              </ButtonGroup>
             ) : (
               // 로그인 상태
-              <NavDropdown title="Profile" id="profile-dropdown" align="end">
-                <NavDropdown.Item href="#profile">View Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
+              <NavDropdown title="Profile" id="profile-dropdown" className="profile-dropdown">
+                <NavDropdown.Item href="#profile">프로필 보기</NavDropdown.Item>
+                <NavDropdown.Item href="#settings">설정</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleLogout}>로그아웃</NavDropdown.Item>
               </NavDropdown>
             )}
           </Nav>

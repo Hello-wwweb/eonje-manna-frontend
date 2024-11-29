@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import "./Login.css"; // Additional CSS styling
 import { useAuth } from "../context/AuthContext";
+import axiosInstance from "../axiosInstance";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginCheck, setLoginCheck] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { login } = useAuth(); // Assuming you have a context or global state for auth
 
@@ -15,43 +17,30 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await axiosInstance.post("/login/", { username, password });
 
       console.log("Response Status:", response.status);
-      console.log("Response Headers:", response.headers);
+      console.log("Response Data:", response.data);
 
-      if (response.ok) {
-        const result = await response.json(); // Parse JSON response
+      if (response.data && response.data.access_token) {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token); // Assuming you have both tokens
+        console.log("Login successful");
 
-        console.log("서버 응답:", result);
-
-        if (result.message === "Login successful") {
-          // Store tokens in localStorage
-          localStorage.setItem("access_token", result.access_token);
-          localStorage.setItem("refresh_token", result.refresh_token);
-        
-          navigate("/home"); // Navigate to the home page
-          login(result.access_token, result.refresh_token);
-        } else {
-          console.error("로그인 실패: 메시지가 예상과 다릅니다.");
-          setLoginCheck(true); // Display login error message
-        }
+        login(response.data.access_token, response.data.refresh_token); // Store tokens in context
+        navigate("/home"); // Navigate to the home page
       } else {
-        const errorResult = await response.json(); // Parse error response
-        console.error("에러 응답:", errorResult);
+        console.error("로그인 실패: 응답에 access_token이 없습니다.");
         setLoginCheck(true); // Display login error message
       }
     } catch (error) {
       console.error("로그인 요청 중 에러:", error);
-      setLoginCheck(true);
+      setLoginCheck(true); // Display login error message
+    } finally {
+      setLoading(false); // Stop loading state
     }
   };
 

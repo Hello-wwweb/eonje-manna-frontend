@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Cafe24Decobox";
   font-weight: normal;
-  src: url("./Cafe24Decobox.ttf") format("truetype");
+  src: url("./Pretendard-SemiBold.otf") format("truetype");
 }
 
 body {
@@ -99,3 +99,4 @@ svg {
   padding: 20px;
   overflow: auto;
 }
+

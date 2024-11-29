@@ -12,10 +12,10 @@ function MemberCard({ nickname, name, email, user_id, groupCreatedBy }) {
                 {user_id === groupCreatedBy && <FaCrown color="gold" size={24} style={{ marginLeft: '8px' }} />}
             </Card.Title>
             <Card.Text>
-            <strong>Name:</strong> {name}
+            <strong>이름:</strong> {name}
             </Card.Text>
             <Card.Text>
-            <strong>Email:</strong> {email}
+            <strong>메일:</strong> {email}
             </Card.Text>
         </Card.Body>
         </Card>

@@ -49,6 +49,9 @@ function App() {
             <Route path="/event/:id" element={<EventDetailPage />} />
             <Route path="/places/:id" element={<PlaceDetailPage />} />
             <Route path="/calendar" element={<CalendarPage />}/>
+
+            <Route path="/place" element={<PlaceDetailPage />}/>
+
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>
         </div>

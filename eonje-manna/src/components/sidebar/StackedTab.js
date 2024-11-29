@@ -22,11 +22,12 @@ function StackedTab() {
       }}
       className="flex-column"
     >
-      <Nav.Link eventKey="dashboard"><BsCompass /> Dashboard</Nav.Link>
-      <Nav.Link eventKey="calendar"><BsCalendar /> Calendar</Nav.Link>
-      <Nav.Link eventKey="groups"><BsPeopleFill /> Groups</Nav.Link>
+      <Nav.Link eventKey="dashboard"><BsCompass /> 대쉬보드</Nav.Link>
+      <Nav.Link eventKey="calendar"><BsCalendar /> 캘린더</Nav.Link>
+      <Nav.Link eventKey="groups"><BsPeopleFill /> 그룹</Nav.Link>
+      <Nav.Link eventKey="place">장소</Nav.Link>
       <Nav.Link eventKey="settings" disabled>
-      <BsGearFill /> Settings
+      <BsGearFill /> 설정
       </Nav.Link>
     </Nav>
   );

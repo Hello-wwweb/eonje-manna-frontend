@@ -37,7 +37,7 @@ function EventDetailPage(){
     const monthEnd = endOfMonth(currentDate);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-    const weekMock = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    const weekMock = ["일", "월", "화", "수", "목", "금", "토"]
     const nextMonthHandler = useCallback(()=>{
         setCurrentDate(addMonths(currentDate, 1));
     }, [currentDate]);
@@ -143,8 +143,8 @@ function EventDetailPage(){
                 </div>
             </div>
             <div className="selectedDates">
-                <h1>Selected Dates</h1>
-                <p>{selectedDate ? format(selectedDate, "yyyy-MM-dd") : "No date selected"}</p>
+                <h1>정해진 날짜</h1>
+                <p>{selectedDate ? format(selectedDate, "yyyy-MM-dd") : "날짜가 선택되지 않았습니다"}</p>
             </div>
             {isModalOpen && (
                 <TimeSelectionModal

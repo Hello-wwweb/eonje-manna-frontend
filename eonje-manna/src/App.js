@@ -20,6 +20,8 @@ import PlaceDetailPage from './pages/PlaceDetailPage';
 import CalendarPage from './pages/calendar';
 import SignupPage from './pages/SignupPage';
 
+import DashboardPage from './pages/DashboardPage';
+
 function App() {
 
   return (
@@ -49,6 +51,7 @@ function App() {
             <Route path="/event/:id" element={<EventDetailPage />} />
             <Route path="/places/:id" element={<PlaceDetailPage />} />
             <Route path="/calendar" element={<CalendarPage />}/>
+            <Route path="/dashboard" element={<DashboardPage />}/>
 
             <Route path="/place" element={<PlaceDetailPage />}/>
 

@@ -19,17 +19,14 @@ import {
     isSunday,
 } from "date-fns";
 
+import Calendar from "../components/calendar/Calendar";
+
 // 시간 선택하는 모달 띄우는 거
 import TimeSelectionModal from "./TimeSelectionModal";
 
-function EventDetailPage(){
+function EventDetailPage() {
     const { event_id } = useParams();
-    const now_date = new Date()
-    {/* 캘린더 만들기 */}
-    //오늘 날짜 관련 상태
     const [currentDate, setCurrentDate] = useState(new Date());
-
-    //선택한 날짜 및 모달 열림 상태
     const [selectedDate, setSelectedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -60,87 +57,15 @@ function EventDetailPage(){
         setIsModalOpen(true);
     };
 
-    const closeModal = ()=> {
+    const closeModal = () => {
         setSelectedDate(null);
         setIsModalOpen(false);
     };
+
     return (
         <div className="container">
-            <div className='calendarWrapper'>
-                <div className="calendar">
-                    {/*년*/}
-                    <div className="year">
-                        {format(currentDate, "yyyy")}
-                    </div>
-                    {/*월*/}
-                    <div className="monthContainer">
-                        <button className="prevBtn" onClick={preMonthHandler}>
-                            <HiChevronLeft />
-                        </button>
-                        <div className="month">
-                            {format(currentDate, "MM")}
-                        </div>
-                        <button className="nextBtn" onClick={nextMonthHandler}>
-                            <HiChevronRight />
-                        </button>
-                    </div>
-                    {/*요일*/}
-                    <div className="dayContainer">
-                        {weekMock.map((v, i)=>{
-                            let style;
-                            if (i==0){
-                                style ={
-                                    color:"red",
-                                };
-                            }
-                            else if (i==6){
-                                style= {
-                                    color:"blue",
-                                };
-                            }
-                            return (
-                                <div key={`day${i}`} style={style}>
-                                    {v}
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {/*일(날짜)*/}
-                    <div className="dateContainer">
-                        {createMonth.map((v, i)=>{
-                            let style;
-                            //이 날짜의 데이터가 현재 달과 같은 날짜인지
-                            const validation = (getMonth(currentDate) == getMonth(v));
-                            //이 데이터가 오늘인지
-                            const today = (format(now_date, "yyyyMMdd")==format(v, "yyyyMMdd"));
-                            if(validation && isSaturday(v)){
-                                style={
-                                    color:"blue",
-                                };
-                            }
-                            else if (validation && isSunday(v)){
-                                style={
-                                    color:"red",
-                                };
-                            }
-
-                            return(
-                                <div key={`date${i}`}
-                                //validation이 true이면 className을 currentMonth, 아니면 diffMonth
-                                className={validation ? "currentMonth" : "diffMonth"}
-                                onClick={()=>onDateClick(v)}
-                                style={style}>
-                                    <div className="topLine">
-                                        <span className='day'>
-                                            {format(v, "dd")}
-                                        </span>
-                                        {today && <span className="todayMark"> (today)</span>}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+            <div className="calendarWrapper">
+                <Calendar currentDate={currentDate} setCurrentDate={setCurrentDate} onDateClick={onDateClick} />
             </div>
             <div className="selectedDates">
                 <h1>정해진 날짜</h1>
@@ -148,6 +73,7 @@ function EventDetailPage(){
             </div>
             {isModalOpen && (
                 <TimeSelectionModal
+                    event_id={event_id}
                     date={selectedDate}
                     onClose={closeModal}
                 />

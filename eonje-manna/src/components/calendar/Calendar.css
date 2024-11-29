@@ -1,0 +1,99 @@
+.container{
+    margin-left: 0px;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+}
+.selectedDates {
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 100px; /* 최소 너비를 주어서 선택된 날짜들이 보이도록 */
+}
+
+.selectedDates h1 {
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.calendar {
+    padding: 10px;
+    padding-top: 0px;
+    width: 800px;
+    
+    .year{
+        text-align: center;
+        font-size:2rem;
+    }
+    .monthContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:10px;
+        .month{
+            font-weight:bold;
+            font-size: 1.5rem;
+        }
+        .prevBtn,
+        .nextBtn {
+            all: unset;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            svg {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    .dayContainer{
+        display:grid;
+        grid-template-columns: repeat(7, 1fr);
+
+        gap:5px;
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    .dateContainer{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        > div {
+            border: 1px solid #3333c8;
+            height:100px;
+            .topLine{
+                display: flex;
+                
+                gap: 5px;
+                padding: 0 3px;
+                align-items: center;
+                .todayMark{
+                    font-size:0.9rem;
+                }
+            }
+            &.currentMonth:hover{
+                background-color: #a6a6c7;
+            }
+        }
+        .currentMonth{
+            font-weight: bold;
+        }
+        
+        .diffMonth {
+            color:#ddd;
+        }
+    }
+}

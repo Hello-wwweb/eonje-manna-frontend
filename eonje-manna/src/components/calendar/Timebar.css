@@ -1,0 +1,89 @@
+/* Time bar container */
+.time-bar {
+    display: flex;
+    justify-content: flex-start;  /* Align the items from the left side */
+    margin: 1px 0;
+    width: 100%;  /* Full width of the modal */
+    flex-wrap: nowrap;  /* Prevent wrapping, all items will stay in one line */
+    overflow-x: auto;  /* Enable horizontal scrolling if the content overflows */
+    -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
+}
+
+/* Each time-bar group (one for each person) */
+.time-bar-group {
+    display: flex;  /* Align name and segments horizontally */
+    align-items: center;  /* Vertically center the elements */
+    margin-bottom: 5px;  /* Space between groups */
+    flex-shrink: 0;  /* Prevent shrinking */
+    overflow: hidden;
+}
+
+/* Time bar name (left column) */
+.time-bar-name {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;  /* Add space between name and time segments */
+    flex-shrink: 0;  /* Prevent the name from shrinking */
+    white-space: nowrap;  /* Prevent the name from wrapping */
+}
+
+/* Time segments container (holds the individual time segment bars) */
+.time-segment-container {
+    display: flex;  /* Display segments in a row */
+    align-items: center;  /* Vertically center the segments */
+    flex-grow: 1;  /* Allow the container to grow and take full width */
+    width: 100%;  /* Ensure the container is as wide as the modal */
+}
+
+/* Individual time segment */
+.time-segment {
+    display: flex;
+    flex-direction: column;  /* Stack segment bar and label vertically */
+    align-items: center;
+    cursor: pointer;
+    margin: 0 5px;  /* Horizontal spacing between segments */
+    flex-shrink: 0;  /* Prevent shrinking */
+    flex-grow: 0;  /* Prevent growing */
+    min-width: 30px;  /* Minimum width of each time segment */
+    max-width: 80px;  /* Maximum width to ensure they don't get too large */
+}
+
+/* Time segment bar */
+.time-segment-bar {
+    width: 100%;  /* Ensure the bar takes the full width of its parent */
+    height: 50px;
+    background-color: lightgray;
+    border-radius: 2px;
+    margin-bottom: 5px;  /* Adds space between the segment bar and the label */
+}
+
+/* Highlight selected time segment */
+.time-segment-bar.selected {
+    background-color: #7d33c8;  /* Selected time color */
+}
+
+/* Label below the time segment bar */
+.time-segment-label {
+    font-size: 12px;
+    color: #333;
+}
+
+/* Handle different time types (e.g., available, overlapping) */
+.selected .time-segment-bar {
+    background-color: #7d33c8;  /* Highlight selected time with purple */
+}
+
+.available .time-segment-bar {
+    background-color: #33c87d;  /* Highlight available time with green */
+}
+
+.overlapping .time-segment-bar {
+    background-color: #ff8c00;  /* Highlight overlapping time with orange */
+}
+
+/* New time types */
+.best .time-segment-bar {
+    background-color: #007bff;  /* Highlight best time with blue */
+}

@@ -299,7 +299,7 @@ function MapPage({ eventId, memberId }) {
       <div className="places-container">
         <h3>장소 투표</h3>
           {markers.map((marker) => (
-            <div class="place"key={marker.id}>
+            <div className="place"key={marker.id}>
               <strong>{marker.place_name}</strong>
               <span style={{ marginLeft: "10px" }}>투표 수: {votes[marker.id] || 0}</span>
               <button className="vote-btn"

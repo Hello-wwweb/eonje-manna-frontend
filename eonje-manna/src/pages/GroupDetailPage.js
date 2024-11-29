@@ -84,7 +84,7 @@ function GroupDetailPage() {
 
     const handleEventSubmit = async () => {
         try {
-            await axiosInstance.post(`/groups/${id}/events`, newEvent);
+            await axiosInstance.post(`/groups/${id}/events/`, newEvent);
             setShowEventModal(false);
             setNewEvent({ name: '', description: ''});
             fetchGroupEvents(); 

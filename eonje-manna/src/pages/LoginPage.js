@@ -4,7 +4,6 @@ import { Form, Button, Container, Alert } from "react-bootstrap";
 import "./Login.css"; // Additional CSS styling
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosInstance";
-import axios from "axios";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -21,7 +20,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login/`, { username, password });
+      const response = await axiosInstance.post("/login/", { username, password });
+
       console.log("Response Status:", response.status);
       console.log("Response Data:", response.data);
 
@@ -73,7 +73,7 @@ const Login = () => {
 
           {loginCheck && (
             <Alert variant="danger" className="text-center">
-              아이디 혹은 비밀번호가 틀렸습니다.
+              이메일 혹은 비밀번호가 틀렸습니다.
             </Alert>
           )}
 

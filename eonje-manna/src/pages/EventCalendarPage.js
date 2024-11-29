@@ -86,7 +86,7 @@ function EventCalendarPage() {
             const response = await axiosInstance.patch(
                 `/groups/${event_id}/events/${event_id}`,  // 여기에 해당하는 URL로 PATCH 요청
                 {
-                    event_date: selectedDate,  // 선택된 날짜를 보내기
+                    event_date: eventDate,  // 선택된 날짜를 보내기
                 }
             );
             console.log('Date updated successfully:', response.data);

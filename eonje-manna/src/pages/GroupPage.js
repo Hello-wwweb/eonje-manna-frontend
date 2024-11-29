@@ -42,6 +42,7 @@ function GroupPage() {
   
       setGroups([...groups, response.data]);
       setNewGroup({ name: '', description: '' });
+      
       setShowModal(false);
     } catch (err) {
       console.error('Error adding group:', err);

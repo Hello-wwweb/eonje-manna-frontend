@@ -19,6 +19,7 @@ import { AxiosInterceptor } from './axiosInstance';
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import SignupPage from './pages/SignupPage';
 import EventCalendarPage from './pages/EventCalendarPage';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/event/:event_id" element={<EventCalendarPage />} />
             <Route path="/places/:id" element={<PlaceDetailPage />} />
             <Route path="/calendar" element={<EventCalendarPage />}/>
+            <Route path="/dashboard" element={<DashboardPage />}/>
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>
         </div>

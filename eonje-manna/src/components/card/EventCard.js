@@ -12,6 +12,8 @@ function EventCard({ id, group_id, name, description, event_date, event_location
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [newName, setNewName] = useState(name);
     const [newDescription, setNewDescription] = useState(description);
+    const [newEventDate, setNewEventDate] = useState(event_date);
+    const [newEventLocation, setNewEventLocation] = useState(event_location);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const handleUpdate = async () => {
@@ -19,8 +21,8 @@ function EventCard({ id, group_id, name, description, event_date, event_location
             const response = await axiosInstance.patch(`/groups/${group_id}/events/${id}`, {
                 name: newName,
                 description: newDescription,
-                event_date: event_date,
-                event_location: event_location,
+                event_date: newEventDate,
+                event_location: newEventLocation
             });
             console.log('Event updated:', response.data);
             setShowUpdateModal(false); // Modal 닫기
@@ -117,6 +119,26 @@ function EventCard({ id, group_id, name, description, event_date, event_location
                                 onChange={(e) => setNewDescription(e.target.value)}
                             />
                         </Form.Group>
+                            {/* 이벤트 날짜 */}
+                            <Form.Group controlId="eventDate">
+                                <Form.Label>이벤트 날짜</Form.Label>
+                                <Form.Control
+                                    type="datetime-local"
+                                    value={newEventDate}
+                                    onChange={(e) => setNewEventDate(e.target.value)}
+                                />
+                            </Form.Group>
+
+                            {/* 이벤트 장소 */}
+                            <Form.Group controlId="eventLocation">
+                                <Form.Label>이벤트 장소</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="장소를 입력하세요"
+                                    value={newEventLocation}
+                                    onChange={(e) => setNewEventLocation(e.target.value)} // 장소 수정
+                                />
+                            </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

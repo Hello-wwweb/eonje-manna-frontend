@@ -6,7 +6,7 @@ import axiosInstance from '../axiosInstance';
 import ScrollContainer from '../components/container/ScrollContainer';
 import EventCard from '../components/card/EventCard';
 import { useState, useEffect } from 'react';
-
+import EventSimpleCard from "../components/card/EventSimpleCard";
 
 function DashboardPage(){
 
@@ -37,7 +37,7 @@ function DashboardPage(){
             <ScrollContainer className="events-container">
                 {events.length > 0 ? (
                     events.map((event, index) => (
-                        <EventCard
+                        <EventSimpleCard
                             key={index}
                             id={event.id}
                             name={event.name}

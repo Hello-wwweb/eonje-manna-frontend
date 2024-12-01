@@ -77,9 +77,6 @@ function GroupPage() {
               <Card.Body>
                 <Card.Title>{group.name}</Card.Title>
                 <Card.Text>{group.description}</Card.Text>
-                <Card.Text>
-                  <strong>멤버:</strong> {Array.isArray(group.members) ? group.members.join(', ') : '멤버가 없습니다'}
-                </Card.Text>
                 <Button variant="outline-primary" onClick={() => navigate(`/groups/${group.id}`)}>
                   자세히 보기
                 </Button>

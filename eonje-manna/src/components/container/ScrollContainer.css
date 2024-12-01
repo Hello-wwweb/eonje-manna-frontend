@@ -4,6 +4,12 @@ display: flex;
 align-items: center;
 }
 
+.event-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    }
+
 .scroll-content {
     display: flex;
     overflow-x: auto;
@@ -13,9 +19,8 @@ align-items: center;
     max-width: 100%;
 }
 
-.scroll-content > * {
+.scroll-content {
 flex-shrink: 0; /* 카드가 줄어들지 않도록 설정 */
-width: 300px; /* 각 카드의 고정 너비 */
 }
 .scroll-content::-webkit-scrollbar {
 display: none;

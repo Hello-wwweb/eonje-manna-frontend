@@ -15,7 +15,7 @@
     align-items: center; /* 수직 정렬 */
   }
   
-  .group-list-container {
+  .group-list-container .embers-container {
     display: flex;
     overflow-x: scroll;
     scroll-behavior: smooth;

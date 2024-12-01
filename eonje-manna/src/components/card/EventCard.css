@@ -1,6 +1,7 @@
 .event-card {
     width: 100%;
     max-width: 400px;
+    min-width: 300px;
     margin: 10px auto;
     background: #ffffff;
     border: 1px solid #ddd;

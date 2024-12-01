@@ -47,7 +47,6 @@ const Login = () => {
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <div className="login-container shadow-lg p-4 rounded bg-white">
-        <h1 className="text-center mb-4">On&Off</h1>
         <Form onSubmit={handleLogin}>
           <Form.Group controlId="username" className="mb-3">
             <Form.Label>아이디</Form.Label>

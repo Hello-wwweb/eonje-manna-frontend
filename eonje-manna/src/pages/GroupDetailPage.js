@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import { Button, Modal, Form, Alert } from 'react-bootstrap';
 import './GroupDetailPage.css'
@@ -26,6 +26,7 @@ function GroupDetailPage() {
         description: ''
     });
 
+    const navigate = useNavigate();
 
 
 
@@ -80,6 +81,7 @@ function GroupDetailPage() {
                 setError('Failed to send invite. Please try again.');
             }
         }
+        navigate("/groups/${id}");
     };
 
     const handleEventSubmit = async () => {

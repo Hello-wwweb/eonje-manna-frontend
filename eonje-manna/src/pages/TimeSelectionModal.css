@@ -1,29 +1,54 @@
-.modalBackdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgb(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
+.custom-modal {
+  max-width: 1200px;
+  width: 95%;
+}
+
+.custom-modal .modal-dialog{
+  max-width: 1200px;
+  width: 90%;
+}
+
+.custom-modal .modal-content {
+  max-width: 1200px;
+  width: 95%;
+}
+
+.custom-modal .modal-header {
+  background-color: #f7f7f7;
+  padding: 20px;
+}
+
+.custom-modal .modal-body {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.custom-modal .modal-footer {
+  background-color: #f7f7f7;
+  padding: 10px;
+}
+
+
+.modal-dialog {
+  display: flex;
     align-items: center;
+    justify-content: center;
 }
+
 /* TimeBars.css */
-.modalContent {
-    background: white;
-    padding: 20px;
+.modal .modal-content {
+  display: flex;
+  background: white;
+    padding: 0px;
     border-radius: 8px;
-    width: 900px;
+    width: 100%;   /* modal-content 너비 100%로 설정 */
     text-align: center;
 }
-.container {
-    width: 80%;
-    margin: 0;
-    text-align: center;
-  }
-  
-  
+
+.modal-body {
+  width: 100%;
+  padding: 20px; /* 필요에 따라 패딩 조정 */
+}
   
   .time-bar {
     display: flex;

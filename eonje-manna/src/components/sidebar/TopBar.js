@@ -34,7 +34,7 @@ function NavScrollExample() {
       <Container fluid>
         {/* 로고 */}
         <Navbar.Brand href="/home">
-          <BsHouse /> Home
+          <BsHouse /> 우리 언제 만나?
         </Navbar.Brand>
 
         {/* 모바일 토글 */}

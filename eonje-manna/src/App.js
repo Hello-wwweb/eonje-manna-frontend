@@ -9,7 +9,7 @@ import NavScrollExample from './components/sidebar/TopBar';
 import GroupPage from './pages/GroupPage';
 import GroupDetailPage from './pages/GroupDetailPage';
 
-import EventDetailPage from './pages/EventDetailPage';
+import EventDetailPage from './pages/calendar';
 import LoginPage from './pages/LoginPage';
 
 import { AuthProvider } from './context/AuthContext';
@@ -49,7 +49,7 @@ function App() {
             <Route path="/groups/:id" element={<GroupDetailPage />} />
             <Route path="/event/:event_id" element={<EventCalendarPage />} />
             <Route path="/places/:event_id" element={<PlaceDetailPage />} />
-            <Route path="/calendar" element={<EventCalendarPage />}/>
+            <Route path="/calendar" element={<EventDetailPage />}/>
             <Route path="/dashboard" element={<DashboardPage />}/>
             <Route path="/" element={<div>Welcome! Select a tab to view content.</div>} />
           </Routes>

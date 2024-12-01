@@ -211,7 +211,7 @@ function TimeSelectionModal({ event_id, date, onClose }) {
     };
 
     return (
-        <Modal show={true} onHide={onClose} size="xl" centered>
+        <Modal show={true} onHide={onClose} centered={true} className='custom-modal'>
             <Modal.Header closeButton>
                 <Modal.Title>Select Time for <br />{date ? format(date, "yyyy-MM-dd") : "No date selected"}</Modal.Title>
             </Modal.Header>
